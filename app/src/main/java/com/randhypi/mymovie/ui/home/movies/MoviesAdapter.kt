@@ -5,9 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.data.movies.Movies
+import com.randhypi.mymovie.data.Movies
 import com.randhypi.mymovie.databinding.ItemsMoviesBinding
 
 
@@ -52,11 +51,11 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ListViewHolder>() {
                     .fitCenter()
                     .into(binding.imgPoster)
             }
-            itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem) }
+            itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem.id) }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Movies)
+        fun onItemClicked(data: String?)
     }
 }

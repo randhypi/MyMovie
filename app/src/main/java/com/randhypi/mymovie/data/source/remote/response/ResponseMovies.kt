@@ -1,4 +1,4 @@
-package com.randhypi.mymovie.data.movies
+package com.randhypi.mymovie.data.source.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

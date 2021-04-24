@@ -1,6 +1,6 @@
-package com.randhypi.mymovie.data.tvshow
+package com.randhypi.mymovie.utils
 
-import com.randhypi.mymovie.data.movies.Movies
+import com.randhypi.mymovie.data.TvShows
 
 object DummyTvShows {
     fun tvShowsDummy(): List<TvShows> {

@@ -1,12 +1,14 @@
 package com.randhypi.mymovie.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.randhypi.mymovie.data.movies.DummyMovies
-import com.randhypi.mymovie.data.movies.Movies
-import com.randhypi.mymovie.data.tvshow.DummyTvShows
-import com.randhypi.mymovie.data.tvshow.TvShows
+import com.randhypi.mymovie.utils.DummyMovies
+import com.randhypi.mymovie.data.Movies
+import com.randhypi.mymovie.utils.DummyTvShows
+import com.randhypi.mymovie.data.TvShows
+import com.randhypi.mymovie.data.source.MoviesRepository
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
 
     private lateinit var id: String
 
@@ -16,25 +18,8 @@ class DetailViewModel : ViewModel() {
 
 
 
-    fun getDetailMovies(): Movies? {
-        var dummy = DummyMovies.moviesDummy()
+    fun getDetailMovies(): LiveData<Movies> = moviesRepository.getDetailMovies(id)
 
-        val movies = dummy.find {
-            it.id == id
-        }
-
-        return movies
-    }
-
-    fun getDetailTvSHows(): TvShows? {
-        var dummy = DummyTvShows.tvShowsDummy()
-
-        val tvShows = dummy.find {
-            it.id == id
-        }
-
-        return tvShows
-
-    }
+    fun getDetailTvSHows():LiveData<TvShows> = moviesRepository.getDetailTvShows(id)
 
 }

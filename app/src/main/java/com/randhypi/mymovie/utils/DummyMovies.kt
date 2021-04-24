@@ -1,4 +1,6 @@
-package com.randhypi.mymovie.data.movies
+package com.randhypi.mymovie.utils
+
+import com.randhypi.mymovie.data.Movies
 
 object DummyMovies {
 
@@ -174,7 +176,8 @@ object DummyMovies {
             )
         )
 
-        movies.add(Movies(
+        movies.add(
+            Movies(
             id="791373",
             original_language= "en",
         original_title = "Zack Snyder's Justice League",
@@ -185,7 +188,8 @@ object DummyMovies {
         poster= "https://image.tmdb.org/t/p/w500/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg",
         release_date= "2021-03-18",
         title= "Zack Snyder's Justice League",
-        ))
+        )
+        )
 
         return movies
     }

@@ -1,5 +1,10 @@
-package com.randhypi.mymovie.data.movies
+package com.randhypi.mymovie.data
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
+@Parcelize
 data class Movies(
     var id: String? = "",
     var original_language: String? = "",
@@ -9,4 +14,4 @@ data class Movies(
     var poster: String? = "",
     var overview: String? = "",
     var popularity: Double? = null
-)
+): Parcelable

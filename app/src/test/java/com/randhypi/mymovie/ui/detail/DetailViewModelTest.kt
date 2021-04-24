@@ -1,7 +1,7 @@
 package com.randhypi.mymovie.ui.detail
 
-import com.randhypi.mymovie.data.movies.DummyMovies
-import com.randhypi.mymovie.data.tvshow.DummyTvShows
+import com.randhypi.mymovie.utils.DummyMovies
+import com.randhypi.mymovie.utils.DummyTvShows
 import org.junit.Test
 
 import org.junit.Assert.*

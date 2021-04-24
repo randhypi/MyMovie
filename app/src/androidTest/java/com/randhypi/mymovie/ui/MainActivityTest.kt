@@ -8,8 +8,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.data.movies.DummyMovies
-import com.randhypi.mymovie.data.tvshow.DummyTvShows
+import com.randhypi.mymovie.utils.DummyMovies
+import com.randhypi.mymovie.utils.DummyTvShows
 import org.junit.Rule
 import org.junit.Test
 

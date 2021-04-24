@@ -1,23 +1,12 @@
 package com.randhypi.mymovie
 
-import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.randhypi.mymovie.data.movies.DummyMovies
-import com.randhypi.mymovie.data.tvshow.DummyTvShows
-import com.randhypi.mymovie.ui.MainActivity
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
-import org.junit.Before
 
 /**
  * Instrumented test, which will execute on an Android device.
