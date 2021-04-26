@@ -17,6 +17,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MoviesViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
-    val getMovies: LiveData<ArrayList<Movies>> = moviesRepository.getMovies() as LiveData<ArrayList<Movies>>
+    val getMovies: LiveData<ArrayList<Movies>>? = moviesRepository.getMovies() as? LiveData<ArrayList<Movies>>
 }
 

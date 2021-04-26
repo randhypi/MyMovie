@@ -8,17 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.data.Movies
-import com.randhypi.mymovie.data.TvShows
 import com.randhypi.mymovie.databinding.FragmentDetailBinding
-import com.randhypi.mymovie.ui.home.movies.MoviesViewModel
 import com.randhypi.mymovie.viewModel.ViewModelFactory
 
 class DetailFragment : Fragment() {

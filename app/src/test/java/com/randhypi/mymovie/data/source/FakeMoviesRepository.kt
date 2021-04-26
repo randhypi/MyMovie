@@ -12,21 +12,11 @@ import com.randhypi.mymovie.data.source.response.ResultsItem
 import com.randhypi.mymovie.data.source.response.ResultsItemTv
 import com.randhypi.mymovie.ui.detail.DetailFragment.Companion.TAG
 
-class MoviesRepository private constructor(private val remoteDataSource: RemoteDataSource) :
+class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
     MoviesDataSource {
-    companion object {
-        @Volatile
-        private var instance: MoviesRepository? = null
-        fun getInstance(remoteData: RemoteDataSource): MoviesRepository =
-            instance ?: synchronized(this) {
-                instance ?: MoviesRepository(remoteData).apply { instance = this }
-            }
-    }
 
     override fun getMovies(): LiveData<List<Movies>> {
-
         val listMovies = MutableLiveData<List<Movies>>()
-
         remoteDataSource.getMovies(object : RemoteDataSource.LoadMoviesCallback {
             override fun onAllMoviesReceived(moviesRsponse: List<ResultsItem?>) {
                 val moviesArrayList = ArrayList<Movies>()
@@ -60,7 +50,6 @@ class MoviesRepository private constructor(private val remoteDataSource: RemoteD
 
     override fun getTvShows(): LiveData<List<TvShows>> {
         val listTv = MutableLiveData<List<TvShows>>()
-
         remoteDataSource.getTv(object : RemoteDataSource.LoadTvCallback {
             override fun onAllTvReceived(tvShowsResponse: List<ResultsItemTv?>) {
                 val tvList = ArrayList<TvShows>()

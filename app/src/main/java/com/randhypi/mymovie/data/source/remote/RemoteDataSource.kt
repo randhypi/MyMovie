@@ -5,6 +5,8 @@ import com.randhypi.mymovie.data.api.ApiConfig
 import com.randhypi.mymovie.data.api.ApiServices
 import com.randhypi.mymovie.data.source.response.ResponseMovies
 import com.randhypi.mymovie.data.source.response.ResponseTvShows
+import com.randhypi.mymovie.data.source.response.ResultsItem
+import com.randhypi.mymovie.data.source.response.ResultsItemTv
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +39,7 @@ class RemoteDataSource {
                         return
                     }
                  response.body().let {
-                      callback.onAllMoviesReceived(it)
+                      callback.onAllMoviesReceived(it?.results!!)
                     }
                 } catch (e: Exception) {
                     Log.d(TAG, e.toString())
@@ -86,7 +88,7 @@ class RemoteDataSource {
                     return
                 }
                 response.body().let {
-                    callback.onAllTvReceived(it)
+                    callback.onAllTvReceived(it?.results!!)
                 }
             }
             override fun onFailure(call: Call<ResponseTvShows>, t: Throwable) {
@@ -121,11 +123,11 @@ class RemoteDataSource {
 
 
     interface LoadMoviesCallback{
-        fun onAllMoviesReceived(moviesRsponse: ResponseMovies?)
+        fun onAllMoviesReceived(moviesRsponse: List<ResultsItem?>)
     }
 
     interface LoadTvCallback{
-        fun onAllTvReceived(tvShowsResponse: ResponseTvShows?)
+        fun onAllTvReceived(tvShowsResponse: List<ResultsItemTv?>)
     }
 
     interface LoadDetailMoviesCallback{

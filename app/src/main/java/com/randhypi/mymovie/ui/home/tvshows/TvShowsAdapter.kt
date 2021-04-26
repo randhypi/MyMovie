@@ -50,7 +50,7 @@ class TvShowsAdapter : RecyclerView.Adapter<TvShowsAdapter.ListViewHolder>() {
                     .fitCenter()
                     .into(binding.imgPoster)
             }
-            itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem.id) }
+            itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem?.id!!) }
         }
     }
 

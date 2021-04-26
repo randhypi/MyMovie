@@ -59,7 +59,7 @@ class TvShowsListFragment : Fragment() {
         binding.rvTvShowsList.layoutManager = GridLayoutManager(context, 2)
         binding.rvTvShowsList.adapter = tvshowsAdapter
 
-        viewModel.getTvShows.observe(viewLifecycleOwner,{tv ->
+        viewModel.getTvShows?.observe(viewLifecycleOwner,{tv ->
              Log.d(TAG,"${tv[0].original_name} tv  list")
             tvshowsAdapter.setData(tv as ArrayList<TvShows>)
         })

@@ -2,7 +2,6 @@ package com.randhypi.mymovie.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.randhypi.mymovie.utils.DummyMovies
 import com.randhypi.mymovie.data.Movies
 import com.randhypi.mymovie.utils.DummyTvShows
 import com.randhypi.mymovie.data.TvShows
@@ -12,8 +11,10 @@ class DetailViewModel(private val moviesRepository: MoviesRepository) : ViewMode
 
     private lateinit var id: String
 
-    fun setIdAndType(id: String){
-        this.id = id
+    fun setIdAndType(id: String?){
+        if (id != null) {
+            this.id = id
+        }
     }
 
 

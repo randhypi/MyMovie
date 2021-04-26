@@ -8,5 +8,5 @@ import com.randhypi.mymovie.data.TvShows
 import com.randhypi.mymovie.data.source.MoviesRepository
 
 class TvShowsViewModel(private val moviesRepository: MoviesRepository): ViewModel() {
-    val getTvShows: LiveData<ArrayList<TvShows>> = moviesRepository.getTvShows() as LiveData<ArrayList<TvShows>>
+    val getTvShows: LiveData<ArrayList<TvShows>>? = moviesRepository.getTvShows() as? LiveData<ArrayList<TvShows>>
 }
