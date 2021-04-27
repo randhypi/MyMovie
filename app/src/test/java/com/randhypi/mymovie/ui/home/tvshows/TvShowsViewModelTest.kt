@@ -48,11 +48,11 @@ class TvShowsViewModelTest{
         viewModel = TvShowsViewModel(moviesRepository)
 
         `when`(moviesRepository.getTvShows()).thenReturn(tv)
-        val tvEntities = viewModel.getTvShows?.value
+        val tvEntities = viewModel.getTvShows()?.value
         verify(moviesRepository).getTvShows()
-        assertEquals(5, tvEntities?.size)
+        assertEquals(tv?.value?.size, tvEntities?.size)
 
-        viewModel.getTvShows?.observeForever(observer)
+        viewModel.getTvShows()?.observeForever(observer)
         verify(observer).onChanged(dummyTv)
     }
 

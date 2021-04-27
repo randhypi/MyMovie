@@ -78,7 +78,6 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
                 listTv.postValue(tvList)
             }
         })
-        Log.d("TV SHOW LIST", listTv.toString())
         return listTv
     }
 
@@ -112,7 +111,6 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
                         overview,
                         popularity
                     )
-                    Log.d(TAG,movie.toString())
                     moviesResult.postValue(movie)
                 }
             })
@@ -133,7 +131,7 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
                 val original_title = response?.originalName!!
                 val title = response?.name!!
                 val release_date = response?.firstAirDate!!
-                val poster = "https://image.tmdb.org/t/p/original${response.posterPath!!}"
+                val poster = response.posterPath!!
                 val overview = response.overview!!
                 val popularity = response.popularity!!
 

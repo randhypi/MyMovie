@@ -14,6 +14,7 @@ import retrofit2.Response
 class RemoteDataSource {
 
     companion object {
+
         val TAG = RemoteDataSource::class.java.simpleName
 
         @Volatile

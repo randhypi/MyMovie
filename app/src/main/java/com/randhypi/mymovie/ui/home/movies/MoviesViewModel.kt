@@ -16,7 +16,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@Suppress("UNCHECKED_CAST")
 class MoviesViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
-    val getMovies: LiveData<ArrayList<Movies>>? = moviesRepository.getMovies() as? LiveData<ArrayList<Movies>>
+    fun getMovies(): LiveData<List<Movies>> = moviesRepository.getMovies()
 }
 

@@ -59,7 +59,7 @@ class MoviesListFragment : Fragment() {
         binding.rvMoviesList.layoutManager = GridLayoutManager(context, 2)
         binding.rvMoviesList.adapter = moviesAdapter
 
-        viewModel.getMovies.observe(viewLifecycleOwner,{movies ->
+        viewModel.getMovies().observe(viewLifecycleOwner,{movies ->
            // Log.d(TAG,"${movies[0].original_title} home list")
             moviesAdapter.setData(movies as ArrayList<Movies>)
         })

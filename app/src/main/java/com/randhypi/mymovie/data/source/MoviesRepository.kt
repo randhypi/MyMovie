@@ -24,9 +24,7 @@ class MoviesRepository private constructor(private val remoteDataSource: RemoteD
     }
 
     override fun getMovies(): LiveData<List<Movies>> {
-
         val listMovies = MutableLiveData<List<Movies>>()
-
         remoteDataSource.getMovies(object : RemoteDataSource.LoadMoviesCallback {
             override fun onAllMoviesReceived(moviesRsponse: List<ResultsItem?>) {
                 val moviesArrayList = ArrayList<Movies>()
@@ -60,7 +58,6 @@ class MoviesRepository private constructor(private val remoteDataSource: RemoteD
 
     override fun getTvShows(): LiveData<List<TvShows>> {
         val listTv = MutableLiveData<List<TvShows>>()
-
         remoteDataSource.getTv(object : RemoteDataSource.LoadTvCallback {
             override fun onAllTvReceived(tvShowsResponse: List<ResultsItemTv?>) {
                 val tvList = ArrayList<TvShows>()

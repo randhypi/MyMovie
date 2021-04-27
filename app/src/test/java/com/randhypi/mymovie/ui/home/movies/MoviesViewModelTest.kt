@@ -24,6 +24,9 @@ class MoviesViewModelTest{
 
     private lateinit var viewModel: MoviesViewModel
 
+    private val dummyMovies = DummyMovies.moviesDummy()
+    private val dummyTvShows = DummyTvShows.tvShowsDummy()
+
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -42,19 +45,18 @@ class MoviesViewModelTest{
     @Test
     fun getMovies() {
 
-        val dummyMovies = DummyMovies.moviesDummy()
         val movies = MutableLiveData<List<Movies>>()
         movies.value = dummyMovies
 
         viewModel = MoviesViewModel(moviesRepository)
 
-        `when`(moviesRepository.getMovies()).thenReturn(movies as MutableLiveData<List<Movies>>)
-        val moviesEntities = viewModel.getMovies?.value as? LiveData<List<Movies>>
+        `when`(moviesRepository.getMovies()).thenReturn(movies)
+        val moviesEntities = viewModel.getMovies()?.value
 
-        verify<MoviesRepository>(moviesRepository, times(2)).getMovies()
-        assertEquals(dummyMovies?.size,moviesEntities?.value?.size)
+        verify<MoviesRepository>(moviesRepository, times(1)).getMovies()
+        assertEquals(dummyMovies?.size,moviesEntities?.size)
 
-        viewModel.getMovies?.observeForever(observer)
+        viewModel.getMovies()?.observeForever(observer)
         verify(observer).onChanged(dummyMovies)
     }
 

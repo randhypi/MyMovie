@@ -22,24 +22,64 @@ import org.junit.Test
 import org.mockito.Mockito.mock
 
 
+@Suppress("UNCHECKED_CAST")
 class MoviesRepositoryTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val remote = mock(RemoteDataSource::class.java)
+
     private val moviesRepository = FakeMoviesRepository(remote)
 
     private val moviesId = DummyMovies.moviesDummy()[0].id
-    private val moviesResponse = DummyMovies.moviesDummy()
+    private val moviesResponse = DummyMovies.moviesDummy().map {
+        ResultsItem(overview = it?.overview,
+            originalLanguage = it?.original_language,
+            originalTitle = it?.original_title,
+            title = it?.title,
+            posterPath = it?.poster,
+            releaseDate = it?.release_date,
+            popularity = it?.popularity,
+            id = it?.id!!.toInt())
+    }
+    private val moviesDetailResponse = DummyMovies.moviesDummy().map{
+        ResponseDetailMovie(overview = it?.overview,
+            originalLanguage = it?.original_language,
+            originalTitle = it?.original_title,
+            title = it?.title,
+            posterPath = it?.poster,
+            releaseDate = it?.release_date,
+            popularity = it?.popularity,
+            id = it?.id!!.toInt())
+    }.first()
     private val tvId = DummyTvShows.tvShowsDummy()[0].id
-    private val tvResponse = DummyTvShows.tvShowsDummy()
+    private val tvResponse = DummyTvShows.tvShowsDummy().map {
+        ResultsItemTv(overview = it?.overview,
+            originalLanguage = it?.original_language,
+            originalName = it?.original_name,
+            name = it?.name,
+            posterPath = it?.poster,
+            firstAirDate = it?.date,
+            voteAverage = it?.popularity,
+            id = it?.id!!.toInt())
+    }
+    private  val tvDetailResponse = DummyTvShows.tvShowsDummy().map{
+        ResponseDetailTv(overview = it?.overview,
+            originalLanguage = it?.original_language,
+            originalName = it?.original_name,
+            name = it?.name,
+            posterPath = it?.poster,
+            firstAirDate = it?.date,
+            popularity = it?.popularity,
+            id = it?.id!!.toInt())
+    }.first()
 
 
     @Test
     fun getAllMovies() {
         doAnswer{ invocaton ->
             (invocaton.arguments[0] as RemoteDataSource.LoadMoviesCallback)
-                .onAllMoviesReceived(moviesResponse as List<ResultsItem?>)
+                .onAllMoviesReceived(moviesResponse)
             null
         }.`when`(remote).getMovies(any())
         val moviesEntities =
@@ -55,11 +95,13 @@ class MoviesRepositoryTest {
     fun getAllTv() {
         doAnswer { invocaton ->
             (invocaton.arguments[0] as RemoteDataSource.LoadTvCallback)
-                .onAllTvReceived(tvResponse as List<ResultsItemTv>)
+                .onAllTvReceived(tvResponse)
             null
         }.`when`(remote).getTv(any())
+
         val tvEntities = LiveDataTestUtil.LiveDataTestUtil.getValue(moviesRepository.getTvShows())
         verify(remote).getTv(any())
+
         assertNotNull(tvEntities)
         assertEquals(tvResponse.size.toLong(), tvEntities.size.toLong())
     }
@@ -67,8 +109,8 @@ class MoviesRepositoryTest {
     @Test
     fun getDetailMovies() {
         doAnswer { invocation ->
-            (invocation.arguments[1] as RemoteDataSource.LoadDetailMoviesCallback)
-                .onMoviesReceived(moviesResponse[1] as ResponseDetailMovie)
+            (invocation.arguments[0] as RemoteDataSource.LoadDetailMoviesCallback)
+                .onMoviesReceived(moviesDetailResponse)
             null
         }.`when`(remote).getDetailMovies(any(), eq(moviesId!!))
 
@@ -79,14 +121,14 @@ class MoviesRepositoryTest {
             .getDetailMovies(any(), eq(moviesId))
 
         assertNotNull(moviesDetailEntities)
-        assertEquals(DummyMovies.moviesDummy()[1].id, moviesDetailEntities.id)
+        assertEquals(DummyMovies.moviesDummy()[0].id, moviesDetailEntities.id)
     }
 
     @Test
     fun getDetailTv() {
         doAnswer { invocation ->
-            (invocation.arguments[1] as RemoteDataSource.LoadDetailTvCallback)
-                .onTvReceived(tvResponse[1] as ResponseDetailTv)
+            (invocation.arguments[0] as RemoteDataSource.LoadDetailTvCallback)
+                .onTvReceived(tvDetailResponse)
             null
         }.`when`(remote).getDetailTv(any(), eq(tvId!!))
 
@@ -97,7 +139,7 @@ class MoviesRepositoryTest {
             .getDetailTv(any(), eq(tvId))
 
         assertNotNull(tvDetailEntities)
-        assertEquals(DummyTvShows.tvShowsDummy()[1], tvDetailEntities)
+        assertEquals(DummyTvShows.tvShowsDummy()[0], tvDetailEntities)
     }
 
 
