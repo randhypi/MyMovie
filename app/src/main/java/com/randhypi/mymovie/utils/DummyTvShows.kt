@@ -1,13 +1,13 @@
 package com.randhypi.mymovie.utils
 
-import com.randhypi.mymovie.data.TvShows
+import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 
 object DummyTvShows {
-    fun tvShowsDummy(): List<TvShows> {
-        val tvShows = ArrayList<TvShows>()
+    fun tvShowsDummy(): List<TvShowsEntity> {
+        val tvShows = ArrayList<TvShowsEntity>()
 
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "88396",
                 "The Falcon and the Winter Soldier",
                 "en",
@@ -19,7 +19,7 @@ object DummyTvShows {
             )
         )
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "71712",
                 "The Good Doctor",
                 "en",
@@ -32,7 +32,7 @@ object DummyTvShows {
         )
 
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "60735",
                 "The Flash",
                 "en",
@@ -45,7 +45,7 @@ object DummyTvShows {
         )
 
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "69050",
                 "Riverdale",
                 "en",
@@ -58,7 +58,7 @@ object DummyTvShows {
         )
 
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "1416",
                 "Grey's Anatomy",
                 "en",
@@ -71,7 +71,7 @@ object DummyTvShows {
         )
 
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "95557",
                 "Invincible",
                 "en",
@@ -84,7 +84,7 @@ object DummyTvShows {
         )
 
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "120168",
                 "Who Killed Sara?",
                 "es",
@@ -97,7 +97,7 @@ object DummyTvShows {
         )
 
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "63174",
                 "Lucifer",
                 "en",
@@ -108,7 +108,7 @@ object DummyTvShows {
             )
         )
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "1402",
                 "The Walking Dead",
                 "en",
@@ -120,7 +120,7 @@ object DummyTvShows {
             )
         )
         tvShows.add(
-            TvShows(
+            TvShowsEntity(
                 "95057",
                 "Superman & Lois",
                 "en",

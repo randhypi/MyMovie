@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.randhypi.mymovie.data.Movies
+import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.databinding.FragmentMoviesBinding
 
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
@@ -61,7 +61,7 @@ class MoviesListFragment : Fragment() {
 
         viewModel.getMovies().observe(viewLifecycleOwner,{movies ->
            // Log.d(TAG,"${movies[0].original_title} home list")
-            moviesAdapter.setData(movies as ArrayList<Movies>)
+            moviesAdapter.setData(movies as ArrayList<MoviesEntity>)
         })
 
         moviesAdapter.setOnItemClickCallback(object : MoviesAdapter.OnItemClickCallback{

@@ -5,12 +5,9 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.doAnswer
-import com.randhypi.mymovie.data.api.ApiConfig
-import com.randhypi.mymovie.data.api.ApiServices
 import com.randhypi.mymovie.data.source.remote.response.RemoteDataSource
 import com.randhypi.mymovie.data.source.remote.response.ResponseDetailMovie
 import com.randhypi.mymovie.data.source.remote.response.ResponseDetailTv
-import com.randhypi.mymovie.data.source.response.ResponseMovies
 import com.randhypi.mymovie.data.source.response.ResultsItem
 import com.randhypi.mymovie.data.source.response.ResultsItemTv
 import com.randhypi.mymovie.utils.DummyMovies
@@ -34,29 +31,29 @@ class MoviesRepositoryTest {
     private val moviesId = DummyMovies.moviesDummy()[0].id
     private val moviesResponse = DummyMovies.moviesDummy().map {
         ResultsItem(overview = it?.overview,
-            originalLanguage = it?.original_language,
-            originalTitle = it?.original_title,
+            originalLanguage = it?.originalLanguage,
+            originalTitle = it?.originalTitle,
             title = it?.title,
             posterPath = it?.poster,
-            releaseDate = it?.release_date,
+            releaseDate = it?.releaseDate,
             popularity = it?.popularity,
             id = it?.id!!.toInt())
     }
     private val moviesDetailResponse = DummyMovies.moviesDummy().map{
         ResponseDetailMovie(overview = it?.overview,
-            originalLanguage = it?.original_language,
-            originalTitle = it?.original_title,
+            originalLanguage = it?.originalLanguage,
+            originalTitle = it?.originalTitle,
             title = it?.title,
             posterPath = it?.poster,
-            releaseDate = it?.release_date,
+            releaseDate = it?.releaseDate,
             popularity = it?.popularity,
             id = it?.id!!.toInt())
     }.first()
     private val tvId = DummyTvShows.tvShowsDummy()[0].id
     private val tvResponse = DummyTvShows.tvShowsDummy().map {
         ResultsItemTv(overview = it?.overview,
-            originalLanguage = it?.original_language,
-            originalName = it?.original_name,
+            originalLanguage = it?.originalLanguage,
+            originalName = it?.originalName,
             name = it?.name,
             posterPath = it?.poster,
             firstAirDate = it?.date,
@@ -65,8 +62,8 @@ class MoviesRepositoryTest {
     }
     private  val tvDetailResponse = DummyTvShows.tvShowsDummy().map{
         ResponseDetailTv(overview = it?.overview,
-            originalLanguage = it?.original_language,
-            originalName = it?.original_name,
+            originalLanguage = it?.originalLanguage,
+            originalName = it?.originalName,
             name = it?.name,
             posterPath = it?.poster,
             firstAirDate = it?.date,

@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.randhypi.mymovie.data.TvShows
+import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.databinding.FragmentTvShowsBinding
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
 import com.randhypi.mymovie.viewModel.ViewModelFactory
@@ -60,8 +60,8 @@ class TvShowsListFragment : Fragment() {
         binding.rvTvShowsList.adapter = tvshowsAdapter
 
         viewModel.getTvShows()?.observe(viewLifecycleOwner,{tv ->
-             Log.d(TAG,"${tv[0].original_name} tv  list")
-            tvshowsAdapter.setData(tv as ArrayList<TvShows>)
+             Log.d(TAG,"${tv[0].originalName} tv  list")
+            tvshowsAdapter.setData(tv as ArrayList<TvShowsEntity>)
         })
 
         tvshowsAdapter.setOnItemClickCallback(object :  TvShowsAdapter.OnItemClickCallback{

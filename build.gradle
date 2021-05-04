@@ -27,6 +27,10 @@ buildscript {
         mockitoKotlinVersion = '2.2.0'
         idleResourceVersion = '3.3.0'
         materialVersion = '1.2.1'
+
+        roomVersion = '2.2.3'
+        roomRuntimeVersion = '2.2.5'
+
         recyclerViewVersion = '1.2.0'
         glideVersion = '4.11.0'
     }

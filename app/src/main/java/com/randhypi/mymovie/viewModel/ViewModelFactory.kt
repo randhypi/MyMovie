@@ -3,7 +3,7 @@ package com.randhypi.mymovie.viewModel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.randhypi.mymovie.data.source.MoviesRepository
+import com.randhypi.mymovie.data.MoviesRepository
 import com.randhypi.mymovie.di.Injection
 import com.randhypi.mymovie.ui.detail.DetailViewModel
 import com.randhypi.mymovie.ui.home.movies.MoviesViewModel

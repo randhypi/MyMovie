@@ -92,9 +92,9 @@ class DetailFragment : Fragment() {
                     .into(binding.ivDetail)
 
                 binding.tvTitle.text = data?.title
-                binding.tvOriginalTitle.text = data?.original_title
-                binding.tvOriginalLanguage.text = data?.original_language
-                binding.tvReleaseDate.text = data?.release_date
+                binding.tvOriginalTitle.text = data?.originalTitle
+                binding.tvOriginalLanguage.text = data?.originalLanguage
+                binding.tvReleaseDate.text = data?.releaseDate
                 binding.tvOverview.text = data?.overview
                 binding.tvPopularity.text = data?.popularity.toString()
             }
@@ -116,8 +116,8 @@ class DetailFragment : Fragment() {
                 .into(binding.ivDetail)
 
             binding.tvTitle.text = data?.name
-            binding.tvOriginalTitle.text = data?.original_name
-            binding.tvOriginalLanguage.text = data?.original_language
+            binding.tvOriginalTitle.text = data?.originalName
+            binding.tvOriginalLanguage.text = data?.originalLanguage
             binding.tvReleaseDate.text = data?.date
             binding.tvOverview.text = data?.overview
             binding.tvPopularity.text = data?.popularity.toString()

@@ -17,7 +17,7 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/")
+                .baseUrl("http://api.alquran.cloud/v1/surah")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 

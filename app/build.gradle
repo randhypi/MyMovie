@@ -15,6 +15,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
+        buildConfigField "String", "MOVIE_KEY",  "f29f6eb26d31bf9cec8ecdd5e011af6f"
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -76,9 +77,12 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     testImplementation 'org.mockito:mockito-inline:3.6.0'
+    implementation "androidx.test.espresso:espresso-idling-resource:3.3.0"
 
 
-
+//    room
+    implementation "androidx.room:room-runtime:$roomRuntimeVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 
 
 }

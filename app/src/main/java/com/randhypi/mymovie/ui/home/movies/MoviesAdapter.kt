@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.data.Movies
+import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.databinding.ItemsMoviesBinding
 
 
 class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ListViewHolder>() {
 
-    private val mData = ArrayList<Movies>()
+    private val mData = ArrayList<MoviesEntity>()
 
-    fun setData(items: ArrayList<Movies>) {
+    fun setData(items: ArrayList<MoviesEntity>) {
         mData.clear()
         mData.addAll(items)
         notifyDataSetChanged()
@@ -41,10 +41,10 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemsMoviesBinding.bind(itemView)
-        fun bind(userItem: Movies) {
+        fun bind(userItem: MoviesEntity) {
             with(itemView) {
-                binding.tvItemTitle.text = userItem.original_title
-                binding.tvItemDate.text = userItem.release_date
+                binding.tvItemTitle.text = userItem.originalTitle
+                binding.tvItemDate.text = userItem.releaseDate
 
                 Glide.with(itemView.context)
                     .load(userItem.poster)

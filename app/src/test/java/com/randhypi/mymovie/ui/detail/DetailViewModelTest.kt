@@ -3,9 +3,9 @@ package com.randhypi.mymovie.ui.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.randhypi.mymovie.data.Movies
-import com.randhypi.mymovie.data.TvShows
-import com.randhypi.mymovie.data.source.MoviesRepository
+import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
+import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
+import com.randhypi.mymovie.data.MoviesRepository
 import com.randhypi.mymovie.utils.DummyMovies
 import com.randhypi.mymovie.utils.DummyTvShows
 import org.junit.Test
@@ -34,9 +34,9 @@ class DetailViewModelTest {
     private lateinit var moviesRepository: MoviesRepository
 
     @Mock
-    private lateinit var moviesObserver: Observer<Movies>
+    private lateinit var moviesObserver: Observer<MoviesEntity>
     @Mock
-    private lateinit var tvObserver: Observer<TvShows>
+    private lateinit var tvObserver: Observer<TvShowsEntity>
 
 
     @Before
@@ -48,13 +48,13 @@ class DetailViewModelTest {
 
     @Test
     fun getDetailMovies() {
-        val movies = MutableLiveData<Movies>()
+        val movies = MutableLiveData<MoviesEntity>()
         movies.value = dummyMovies
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(moviesId)
 
         `when`(moviesRepository.getDetailMovies(moviesId!!)).thenReturn(movies)
-        val moviesEntity = viewModel.getDetailMovies().value as Movies
+        val moviesEntity = viewModel.getDetailMovies().value as MoviesEntity
 
         verify(moviesRepository).getDetailMovies(moviesId)
 
@@ -70,13 +70,13 @@ class DetailViewModelTest {
 
     @Test
     fun getDetailTvSHows() {
-        val tv = MutableLiveData<TvShows>()
+        val tv = MutableLiveData<TvShowsEntity>()
         tv.value = dummyTvShows
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(tvShowsId)
 
         `when`(moviesRepository.getDetailTvShows(tvShowsId!!)).thenReturn(tv)
-        val tvEntity = viewModel.getDetailTvSHows().value as TvShows
+        val tvEntity = viewModel.getDetailTvSHows().value as TvShowsEntity
         verify(moviesRepository).getDetailTvShows(tvShowsId!!)
 
         assertNotNull(tvEntity)

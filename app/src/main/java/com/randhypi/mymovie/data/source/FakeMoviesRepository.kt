@@ -1,25 +1,24 @@
 package com.randhypi.mymovie.data.source
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.randhypi.mymovie.data.Movies
-import com.randhypi.mymovie.data.TvShows
+import com.randhypi.mymovie.data.MoviesDataSource
+import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
+import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.data.source.remote.response.RemoteDataSource
 import com.randhypi.mymovie.data.source.remote.response.ResponseDetailMovie
 import com.randhypi.mymovie.data.source.remote.response.ResponseDetailTv
 import com.randhypi.mymovie.data.source.response.ResultsItem
 import com.randhypi.mymovie.data.source.response.ResultsItemTv
-import com.randhypi.mymovie.ui.detail.DetailFragment.Companion.TAG
 
 class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
     MoviesDataSource {
 
-    override fun getMovies(): LiveData<List<Movies>> {
-        val listMovies = MutableLiveData<List<Movies>>()
+    override fun getMovies(): LiveData<List<MoviesEntity>> {
+        val listMovies = MutableLiveData<List<MoviesEntity>>()
         remoteDataSource.getMovies(object : RemoteDataSource.LoadMoviesCallback {
             override fun onAllMoviesReceived(moviesRsponse: List<ResultsItem?>) {
-                val moviesArrayList = ArrayList<Movies>()
+                val moviesArrayList = ArrayList<MoviesEntity>()
                 for (response in moviesRsponse) {
                     val id = response?.id.toString()
                     val original_language = response?.originalLanguage
@@ -30,7 +29,7 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
                     val overview = response?.overview
                     val popularity = response?.popularity
 
-                    var movie = Movies(
+                    var movie = MoviesEntity(
                         id,
                         original_language,
                         original_title,
@@ -48,11 +47,11 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
         return listMovies
     }
 
-    override fun getTvShows(): LiveData<List<TvShows>> {
-        val listTv = MutableLiveData<List<TvShows>>()
+    override fun getTvShows(): LiveData<List<TvShowsEntity>> {
+        val listTv = MutableLiveData<List<TvShowsEntity>>()
         remoteDataSource.getTv(object : RemoteDataSource.LoadTvCallback {
             override fun onAllTvReceived(tvShowsResponse: List<ResultsItemTv?>) {
-                val tvList = ArrayList<TvShows>()
+                val tvList = ArrayList<TvShowsEntity>()
                 for (response in tvShowsResponse) {
                     val id = response?.id!!.toString()
                     val original_language = response?.originalLanguage!!
@@ -63,11 +62,11 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
                     val overview = response?.overview!!
                     val popularity = response?.voteAverage!!
 
-                    var tv = TvShows(
+                    var tv = TvShowsEntity(
                         id = id,
                         name = title,
-                        original_name = original_title,
-                        original_language = original_language,
+                        originalName = original_title,
+                        originalLanguage = original_language,
                         overview = overview,
                         popularity = popularity,
                         poster = poster,
@@ -81,14 +80,14 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
         return listTv
     }
 
-    override fun getDetailMovies(moviesId: String): LiveData<Movies> {
-        val moviesResult = MutableLiveData<Movies>()
+    override fun getDetailMovies(moviesId: String): LiveData<MoviesEntity> {
+        val moviesResult = MutableLiveData<MoviesEntity>()
 
         remoteDataSource.getDetailMovies(
             id = moviesId,
             callback = object : RemoteDataSource.LoadDetailMoviesCallback {
                 override fun onMoviesReceived(detailMovie: ResponseDetailMovie?) {
-                    lateinit var movie: Movies
+                    lateinit var movie: MoviesEntity
 
                     val response = detailMovie
 
@@ -101,7 +100,7 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
                     val overview = response?.overview
                     val popularity = response?.popularity
 
-                    movie = Movies(
+                    movie = MoviesEntity(
                         id,
                         original_language,
                         original_title,
@@ -118,12 +117,12 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
     }
 
 
-    override fun getDetailTvShows(id: String): LiveData<TvShows> {
-        val tvResult = MutableLiveData<TvShows>()
+    override fun getDetailTvShows(id: String): LiveData<TvShowsEntity> {
+        val tvResult = MutableLiveData<TvShowsEntity>()
 
         remoteDataSource.getDetailTv(id =id,callback = object: RemoteDataSource.LoadDetailTvCallback{
             override fun onTvReceived(detailTvResponse: ResponseDetailTv?) {
-               lateinit var tvShows: TvShows
+               lateinit var tvShows: TvShowsEntity
                val response = detailTvResponse
 
                 val id = response?.id!!.toString()
@@ -135,11 +134,11 @@ class FakeMoviesRepository(private val remoteDataSource: RemoteDataSource) :
                 val overview = response.overview!!
                 val popularity = response.popularity!!
 
-                tvShows = TvShows(
+                tvShows = TvShowsEntity(
                     id = id,
                     name = title,
-                    original_name = original_title,
-                    original_language = original_language,
+                    originalName = original_title,
+                    originalLanguage = original_language,
                     overview = overview,
                     popularity = popularity,
                     poster = poster,

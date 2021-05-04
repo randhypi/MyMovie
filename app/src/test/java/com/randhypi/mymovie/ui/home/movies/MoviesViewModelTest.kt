@@ -1,12 +1,10 @@
 package com.randhypi.mymovie.ui.home.movies
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.randhypi.mymovie.data.Movies
-import com.randhypi.mymovie.data.TvShows
-import com.randhypi.mymovie.data.source.MoviesRepository
+import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
+import com.randhypi.mymovie.data.MoviesRepository
 import com.randhypi.mymovie.utils.DummyMovies
 import com.randhypi.mymovie.utils.DummyTvShows
 import org.junit.Test
@@ -31,7 +29,7 @@ class MoviesViewModelTest{
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<List<Movies>>
+    private lateinit var observer: Observer<List<MoviesEntity>>
 
 
     @Mock
@@ -45,7 +43,7 @@ class MoviesViewModelTest{
     @Test
     fun getMovies() {
 
-        val movies = MutableLiveData<List<Movies>>()
+        val movies = MutableLiveData<List<MoviesEntity>>()
         movies.value = dummyMovies
 
         viewModel = MoviesViewModel(moviesRepository)

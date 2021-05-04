@@ -6,10 +6,15 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.randhypi.mymovie.R
 import com.randhypi.mymovie.utils.DummyMovies
 import com.randhypi.mymovie.utils.DummyTvShows
+import com.randhypi.mymovie.utils.EspressoIdlingResource
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -20,6 +25,17 @@ class MainActivityTest{
 
     @get:Rule
     var activityRule = ActivityScenarioRule(MainActivity::class.java)
+
+    @Before
+    fun setUp() {
+        ActivityScenario.launch(MainActivity::class.java)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    }
 
     @Test
     fun loadMovies() {
@@ -44,7 +60,7 @@ class MainActivityTest{
        onView(withId(R.id.tv_release_date))
             .check(matches(isDisplayed()))
        onView(withId(R.id.tv_release_date))
-            .check(matches(withText(dummyMovies[0].release_date)))
+            .check(matches(withText(dummyMovies[0].releaseDate)))
     }
 
 
