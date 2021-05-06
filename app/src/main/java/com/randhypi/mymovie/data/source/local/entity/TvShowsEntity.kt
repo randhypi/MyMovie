@@ -12,7 +12,6 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "tvshowsentity")
 data class TvShowsEntity(
     @PrimaryKey
-    @NonNull
     @ColumnInfo(name = "tvShowsId")
     val id: String = "",
     @ColumnInfo(name = "name")
@@ -30,5 +29,5 @@ data class TvShowsEntity(
     @ColumnInfo(name = "date")
     val date: String? = "",
     @ColumnInfo(name = "favorite")
-    val favorite: Boolean? = false
+    var favorite: Boolean? = false
 ) : Parcelable

@@ -1,4 +1,4 @@
-package com.randhypi.mymovie.ui.home
+package com.randhypi.mymovie.ui.favorite
 
 
 import androidx.annotation.StringRes
@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.ui.home.movies.MoviesListFragment
+import com.randhypi.mymovie.ui.favorite.movies.MoviesFavListFragment
+import com.randhypi.mymovie.ui.favorite.tvshows.TvShowsFavListFragment
 
-import com.randhypi.mymovie.ui.home.tvshows.TvShowsListFragment
-
-class SectionsPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(
+class SectionsPagerFavAdapter(activity: FragmentActivity) : FragmentStateAdapter(
     activity
 ){
 companion object {
@@ -24,8 +23,8 @@ companion object {
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null
         when (position) {
-            0 ->fragment = MoviesListFragment()
-            1 ->fragment = TvShowsListFragment()
+            0 ->fragment = MoviesFavListFragment()
+            1 ->fragment = TvShowsFavListFragment()
         }
         return fragment as Fragment
     }

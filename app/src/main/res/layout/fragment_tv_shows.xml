@@ -15,4 +15,13 @@
         android:visibility="visible"
         tools:visibility="visible" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="187dp"
+        android:layout_height="235dp"
+        android:elevation="2dp"
+        android:backgroundTint="@color/purple_700"
+        android:visibility="gone"
+       />
+
 </FrameLayout>

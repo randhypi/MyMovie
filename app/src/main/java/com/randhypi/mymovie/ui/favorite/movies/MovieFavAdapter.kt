@@ -1,4 +1,4 @@
-package com.randhypi.mymovie.ui.home.tvshows
+package com.randhypi.mymovie.ui.home.movies
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
-import com.randhypi.mymovie.databinding.ItemsTvshowsBinding
-import com.randhypi.mymovie.vo.Resource
+import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
+import com.randhypi.mymovie.databinding.ItemsMoviesfavBinding
 
-class TvShowsAdapter : RecyclerView.Adapter<TvShowsAdapter.ListViewHolder>() {
 
-    private val mData = ArrayList<TvShowsEntity>()
+class MovieFavAdapter() : RecyclerView.Adapter<MovieFavAdapter.ListViewHolder>() {
 
-    fun setData(items: ArrayList<TvShowsEntity>) {
+    private val mData = ArrayList<MoviesEntity>()
+
+    fun setData(items: ArrayList<MoviesEntity>) {
         mData.clear()
         mData.addAll(items)
         notifyDataSetChanged()
@@ -40,22 +40,22 @@ class TvShowsAdapter : RecyclerView.Adapter<TvShowsAdapter.ListViewHolder>() {
     override fun getItemCount(): Int = mData.size
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemsTvshowsBinding.bind(itemView)
-        fun bind(userItem: TvShowsEntity) {
+        private val binding = ItemsMoviesfavBinding.bind(itemView)
+        fun bind(userItem: MoviesEntity) {
             with(itemView) {
-                binding.tvItemTitle.text = userItem.originalName
-                binding.tvItemDate.text = userItem.date
+                binding.tvItemTitle.text = userItem.originalTitle
+                binding.tvItemDate.text = userItem.releaseDate
 
                 Glide.with(itemView.context)
                     .load(userItem.poster)
                     .fitCenter()
                     .into(binding.imgPoster)
             }
-            itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem?.id!!) }
+            itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem.moviesId) }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: String)
+        fun onItemClicked(data: String?)
     }
 }

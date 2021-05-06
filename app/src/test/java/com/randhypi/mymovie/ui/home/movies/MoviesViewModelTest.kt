@@ -7,6 +7,7 @@ import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.data.MoviesRepository
 import com.randhypi.mymovie.utils.DummyMovies
 import com.randhypi.mymovie.utils.DummyTvShows
+import com.randhypi.mymovie.vo.Resource
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
@@ -22,14 +23,12 @@ class MoviesViewModelTest{
 
     private lateinit var viewModel: MoviesViewModel
 
-    private val dummyMovies = DummyMovies.moviesDummy()
-    private val dummyTvShows = DummyTvShows.tvShowsDummy()
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<List<MoviesEntity>>
+    private lateinit var observer: Observer<Resource<List<MoviesEntity>>>
 
 
     @Mock
@@ -42,17 +41,15 @@ class MoviesViewModelTest{
 
     @Test
     fun getMovies() {
-
-        val movies = MutableLiveData<List<MoviesEntity>>()
+        val dummyMovies = Resource.success(DummyMovies.moviesDummy())
+        val movies = MutableLiveData<Resource<List<MoviesEntity>>>()
         movies.value = dummyMovies
-
-        viewModel = MoviesViewModel(moviesRepository)
 
         `when`(moviesRepository.getMovies()).thenReturn(movies)
         val moviesEntities = viewModel.getMovies()?.value
 
         verify<MoviesRepository>(moviesRepository, times(1)).getMovies()
-        assertEquals(dummyMovies?.size,moviesEntities?.size)
+        assertEquals(dummyMovies?.data?.size,moviesEntities?.data?.size)
 
         viewModel.getMovies()?.observeForever(observer)
         verify(observer).onChanged(dummyMovies)

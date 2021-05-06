@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.data.MoviesRepository
+import com.randhypi.mymovie.vo.Resource
 
 class TvShowsViewModel(private val moviesRepository: MoviesRepository): ViewModel() {
-    fun getTvShows(): LiveData<ArrayList<TvShowsEntity>>? = moviesRepository.getTvShows() as? LiveData<ArrayList<TvShowsEntity>>
+    fun getTvShows(): LiveData<Resource<ArrayList<TvShowsEntity>>> = moviesRepository.getTvShows() as LiveData<Resource<ArrayList<TvShowsEntity>>>
 }

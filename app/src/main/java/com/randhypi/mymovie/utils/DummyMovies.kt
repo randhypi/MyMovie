@@ -9,7 +9,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "19404",
+                moviesId = "19404",
                 originalLanguage = "hi",
                 originalTitle = "दिलवाले दुल्हनिया ले जायेंगे",
                 overview = "Raj is a rich, carefree," +
@@ -30,7 +30,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "278",
+                moviesId = "278",
                 originalLanguage = "en",
                 originalTitle = "The Shawshank Redemption",
                 overview = "Framed in the 1940s for the double" +
@@ -50,7 +50,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "724089",
+                moviesId = "724089",
                 originalLanguage = "en",
                 originalTitle = "Gabriel's Inferno Part II",
                 overview = "Professor Gabriel Emerson finally learns the truth" +
@@ -68,7 +68,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "238",
+                moviesId = "238",
                 originalLanguage = "en",
                 originalTitle = "The Godfather",
                 overview = "Spanning the years 1945 to 1955, a chronicle of " +
@@ -86,7 +86,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "761053",
+                moviesId = "761053",
                 originalLanguage = "en",
                 originalTitle = "Gabriel's Inferno Part III",
                 overview = "The final part of the film adaption of the erotic " +
@@ -102,7 +102,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "696374",
+                moviesId = "696374",
                 originalLanguage = "en",
                 originalTitle = "Gabriel's Inferno",
                 overview = "An intriguing and sinful exploration of seduction, forbidden love, " +
@@ -118,7 +118,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "424",
+                moviesId = "424",
                 originalLanguage = "en",
                 originalTitle = "Schindler's List",
                 overview = "The true story of how businessman Oskar Schindler saved over " +
@@ -133,7 +133,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "240",
+                moviesId = "240",
                 originalLanguage = "en",
                 originalTitle = "The Godfather: Part II",
                 overview = "In the continuing saga of the Corleone crime family, a young Vito Corleone " +
@@ -148,7 +148,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "441130",
+                moviesId = "441130",
                 originalLanguage = "en",
                 originalTitle = "Wolfwalkers",
                 overview = "In a time of superstition and magic, when wolves are seen as demonic and " +
@@ -165,7 +165,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-                id = "372058",
+                moviesId = "372058",
                 originalLanguage = "ja",
                 originalTitle = "君の名は。",
                 overview = "High schoolers Mitsuha and Taki are complete strangers living separate lives. But one night, they suddenly switch places. Mitsuha wakes up in Taki’s body, and he in hers. This bizarre occurrence continues to happen randomly, and the two must adjust their lives around each other.",
@@ -178,7 +178,7 @@ object DummyMovies {
 
         movies.add(
             MoviesEntity(
-            id="791373",
+            moviesId="791373",
             originalLanguage= "en",
         originalTitle = "Zack Snyder's Justice League",
         overview= "Determined to ensure Superman's ultimate sacrifice was not in vain, Bruce " +

@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.movies.MoviesListFragment">
-
+    tools:context=".ui.favorite.tvshows.TvShowsFavListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMoviesList"
+        android:id="@+id/rvTvShowsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="0dp"
@@ -15,15 +14,5 @@
         android:layout_marginBottom="0dp"
         android:visibility="visible"
         tools:visibility="visible" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="187dp"
-        android:layout_height="235dp"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/purple_700"
-        android:elevation="2dp"
-        android:visibility="gone" />
-
 
 </FrameLayout>

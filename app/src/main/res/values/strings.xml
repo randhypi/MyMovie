@@ -13,4 +13,6 @@
     <string name="popularity">Popularity</string>
     <string name="overview">Overview</string>
     <string name="detail">Detail</string>
+    <string name="favorite_item">Favorite item</string>
+    <string name="favorite">Favorite</string>
 </resources>

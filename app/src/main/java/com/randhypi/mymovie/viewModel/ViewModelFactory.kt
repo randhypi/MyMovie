@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.randhypi.mymovie.data.MoviesRepository
 import com.randhypi.mymovie.di.Injection
 import com.randhypi.mymovie.ui.detail.DetailViewModel
+import com.randhypi.mymovie.ui.home.movies.MoviesFavViewModel
 import com.randhypi.mymovie.ui.home.movies.MoviesViewModel
+import com.randhypi.mymovie.ui.home.tvshows.TvShowsFavViewModel
 import com.randhypi.mymovie.ui.home.tvshows.TvShowsViewModel
 
 class ViewModelFactory private constructor(private val mMoviesRepository: MoviesRepository) : ViewModelProvider.NewInstanceFactory() {
@@ -26,14 +28,20 @@ class ViewModelFactory private constructor(private val mMoviesRepository: Movies
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when {
+            modelClass.isAssignableFrom(MoviesFavViewModel::class.java) -> {
+                return MoviesFavViewModel(mMoviesRepository) as T
+            }
+            modelClass.isAssignableFrom(TvShowsFavViewModel::class.java) -> {
+                return TvShowsFavViewModel(mMoviesRepository) as T
+            }
+            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
+                return DetailViewModel(mMoviesRepository) as T
+            }
             modelClass.isAssignableFrom(MoviesViewModel::class.java) -> {
                 return MoviesViewModel(mMoviesRepository) as T
             }
             modelClass.isAssignableFrom(TvShowsViewModel::class.java) -> {
                 return TvShowsViewModel(mMoviesRepository) as T
-            }
-            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
-                return DetailViewModel(mMoviesRepository) as T
             }
 
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)

@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
 import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.databinding.ItemsMoviesBinding
+import com.randhypi.mymovie.vo.Resource
 
 
 class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ListViewHolder>() {
@@ -51,7 +52,7 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ListViewHolder>() {
                     .fitCenter()
                     .into(binding.imgPoster)
             }
-            itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem.id) }
+            itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem.moviesId) }
         }
     }
 

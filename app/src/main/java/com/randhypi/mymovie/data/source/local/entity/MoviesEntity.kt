@@ -1,7 +1,6 @@
 package com.randhypi.mymovie.data.source.local.entity
 
 import android.os.Parcelable
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,9 +11,8 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "moviesentity")
 data class MoviesEntity(
     @PrimaryKey
-    @NonNull
     @ColumnInfo(name = "moviesId")
-    var id: String? = "",
+    var moviesId: String = "",
 
     @ColumnInfo(name = "originalLanguage")
     var originalLanguage: String? = "",
@@ -38,5 +36,5 @@ data class MoviesEntity(
     var popularity: Double? = null,
 
     @ColumnInfo(name = "favorite")
-    val favorite: Boolean? = false
+    var favorite: Boolean? = false
 ): Parcelable

@@ -23,7 +23,7 @@ class DetailViewModelTest {
 
     private lateinit var viewModel: DetailViewModel
     private val dummyMovies = DummyMovies.moviesDummy()[0]
-    private val moviesId = dummyMovies.id
+    private val moviesId = dummyMovies.moviesId
     private val dummyTvShows = DummyTvShows.tvShowsDummy()[0]
     private val tvShowsId = dummyTvShows.id
 
@@ -53,16 +53,16 @@ class DetailViewModelTest {
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(moviesId)
 
-        `when`(moviesRepository.getDetailMovies(moviesId!!)).thenReturn(movies)
-        val moviesEntity = viewModel.getDetailMovies().value as MoviesEntity
+        `when`(moviesRepository.getDetailMovies(moviesId)).thenReturn(movies)
+        val moviesEntity = viewModel.getDetailMovies().value
 
         verify(moviesRepository).getDetailMovies(moviesId)
 
         assertNotNull(moviesEntity)
 
-        assertEquals(dummyMovies?.poster,moviesEntity?.poster)
-        assertEquals(dummyMovies?.id,moviesEntity?.id)
-        assertEquals(dummyMovies?.title,moviesEntity?.title)
+        assertEquals(dummyMovies.poster,moviesEntity?.poster)
+        assertEquals(dummyMovies.moviesId,moviesEntity?.moviesId)
+        assertEquals(dummyMovies.title,moviesEntity?.title)
 
         viewModel.getDetailMovies().observeForever(moviesObserver)
         verify(moviesObserver).onChanged(dummyMovies)
@@ -75,15 +75,16 @@ class DetailViewModelTest {
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(tvShowsId)
 
-        `when`(moviesRepository.getDetailTvShows(tvShowsId!!)).thenReturn(tv)
-        val tvEntity = viewModel.getDetailTvSHows().value as TvShowsEntity
-        verify(moviesRepository).getDetailTvShows(tvShowsId!!)
+        `when`(moviesRepository.getDetailTvShows(tvShowsId)).thenReturn(tv)
+        val tvEntity = viewModel.getDetailTvSHows().value
+
+        verify(moviesRepository).getDetailTvShows(tvShowsId)
 
         assertNotNull(tvEntity)
 
-        assertEquals(dummyTvShows?.poster,tvEntity?.poster)
-        assertEquals(dummyTvShows?.id,tvEntity?.id)
-        assertEquals(dummyTvShows?.name,tvEntity?.name)
+        assertEquals(dummyTvShows.poster,tvEntity?.poster)
+        assertEquals(dummyTvShows.id,tvEntity?.id)
+        assertEquals(dummyTvShows.name,tvEntity?.name)
 
         viewModel.getDetailTvSHows().observeForever(tvObserver)
         verify(tvObserver).onChanged(dummyTvShows)

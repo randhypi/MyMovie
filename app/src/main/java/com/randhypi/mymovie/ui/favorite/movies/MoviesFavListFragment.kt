@@ -1,4 +1,4 @@
-package com.randhypi.mymovie.ui.home.movies
+package com.randhypi.mymovie.ui.favorite.movies
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,18 +10,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
-import com.randhypi.mymovie.databinding.FragmentMoviesBinding
-import com.randhypi.mymovie.ui.favorite.movies.MoviesFavListFragment
-
+import com.randhypi.mymovie.databinding.FragmentMoviesfavBinding
+import com.randhypi.mymovie.ui.favorite.FavoriteFragment
+import com.randhypi.mymovie.ui.favorite.FavoriteFragmentDirections
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
+import com.randhypi.mymovie.ui.home.movies.MovieFavAdapter
+import com.randhypi.mymovie.ui.home.movies.MoviesFavViewModel
 import com.randhypi.mymovie.viewModel.ViewModelFactory
-import com.randhypi.mymovie.vo.Status
 
-class  MoviesListFragment : Fragment() {
+class MoviesFavListFragment : Fragment() {
 
-    private var _binding: FragmentMoviesBinding? = null
+    private var _binding: FragmentMoviesfavBinding? = null
     private val binding get() = _binding!!
-    private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var movieFavAdapter: MovieFavAdapter
 
     companion object{
         val TAG = MoviesFavListFragment::class.java.simpleName
@@ -32,7 +33,7 @@ class  MoviesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        _binding = FragmentMoviesfavBinding.inflate(inflater, container, false)
         val view = binding.root
 
         return view
@@ -45,7 +46,7 @@ class  MoviesListFragment : Fragment() {
 
     private fun selectedMovies(movies: String){
         Toast.makeText(context,movies,Toast.LENGTH_SHORT).show()
-        val toDetail = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
+        val toDetail = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment()
         toDetail.id = movies
         toDetail.type = "movies"
 
@@ -54,30 +55,19 @@ class  MoviesListFragment : Fragment() {
 
     private fun showGridAdapter() {
         val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[MoviesViewModel::class.java]
+        val viewModel = ViewModelProvider(this, factory)[MoviesFavViewModel::class.java]
 
-        moviesAdapter = MoviesAdapter()
-        moviesAdapter.notifyDataSetChanged()
+        movieFavAdapter = MovieFavAdapter()
+        movieFavAdapter.notifyDataSetChanged()
         binding.rvMoviesList.layoutManager = GridLayoutManager(context, 2)
-        binding.rvMoviesList.adapter = moviesAdapter
+        binding.rvMoviesList.adapter = movieFavAdapter
 
-        viewModel.getMovies().observe(viewLifecycleOwner,{ movies ->
+        viewModel.getMoviesFav().observe(viewLifecycleOwner,{ movies ->
            // Log.d(TAG,"${movies[0].original_title} home list")
-           when(movies.status){
-               Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
-               Status.SUCCESS -> {
-                   binding?.progressBar?.visibility = View.GONE
-                   moviesAdapter.setData(movies.data as ArrayList<MoviesEntity>)
-               }
-               Status.ERROR -> {
-                   binding?.progressBar?.visibility = View.GONE
-                   Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
-               }
-           }
-
+            movieFavAdapter.setData(movies as ArrayList<MoviesEntity>)
         })
 
-        moviesAdapter.setOnItemClickCallback(object : MoviesAdapter.OnItemClickCallback{
+        movieFavAdapter.setOnItemClickCallback(object : MovieFavAdapter.OnItemClickCallback{
             override fun onItemClicked(data: String?) {
                 if (data != null) {
                     selectedMovies(data)

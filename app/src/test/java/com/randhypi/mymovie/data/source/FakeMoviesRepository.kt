@@ -1,8 +1,10 @@
-package com.randhypi.mymovie.data
+package com.randhypi.mymovie.data.source
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.randhypi.mymovie.data.MoviesDataSource
+import com.randhypi.mymovie.data.NetworkBoundResource
 import com.randhypi.mymovie.data.source.local.LocalDataSource
 import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
@@ -17,23 +19,16 @@ import com.randhypi.mymovie.ui.detail.DetailFragment.Companion.TAG
 import com.randhypi.mymovie.utils.AppExecutors
 import com.randhypi.mymovie.vo.Resource
 
-class MoviesRepository private constructor(
+class FakeMoviesRepository  constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) :
     MoviesDataSource {
-    companion object {
-        @Volatile
-        private var instance: MoviesRepository? = null
-        fun getInstance(remoteData: RemoteDataSource,localDataSource: LocalDataSource,appExecutors: AppExecutors): MoviesRepository =
-            instance ?: synchronized(this) {
-                instance ?: MoviesRepository(remoteData,localDataSource,appExecutors).apply { instance = this }
-            }
-    }
+
 
     override fun getMovies(): LiveData<Resource<List<MoviesEntity>>> {
-       return object : NetworkBoundResource<List<MoviesEntity>,List<ResultsItem>>(appExecutors){
+       return object : NetworkBoundResource<List<MoviesEntity>, List<ResultsItem>>(appExecutors){
            override fun loadFromDB(): LiveData<List<MoviesEntity>> =
                localDataSource.getAllMovies()
 
@@ -132,6 +127,7 @@ class MoviesRepository private constructor(
 
     override fun setFavMovie(movie: MoviesEntity) =
       appExecutors.diskIO().execute {  localDataSource.updateMovie(movie) }
+
 
     override fun setFavTvShow(tv: TvShowsEntity) =
      appExecutors.diskIO().execute {localDataSource.updateTv(tv)}

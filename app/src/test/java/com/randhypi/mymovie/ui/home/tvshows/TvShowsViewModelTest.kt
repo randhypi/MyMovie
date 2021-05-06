@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.data.MoviesRepository
 import com.randhypi.mymovie.utils.DummyTvShows
+import com.randhypi.mymovie.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.Before
@@ -27,7 +28,7 @@ class TvShowsViewModelTest{
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<List<TvShowsEntity>>
+    private lateinit var observer: Observer<Resource<ArrayList<TvShowsEntity>>>
 
 
     @Mock
@@ -40,19 +41,17 @@ class TvShowsViewModelTest{
 
     @Test
     fun getTv() {
-        val dummyTv = DummyTvShows.tvShowsDummy()
-        val tv = MutableLiveData<List<TvShowsEntity>>()
+        val dummyTv = Resource.success(DummyTvShows.tvShowsDummy())
+        val tv = MutableLiveData<Resource<List<TvShowsEntity>>>()
         tv.value = dummyTv
-
-        viewModel = TvShowsViewModel(moviesRepository)
 
         `when`(moviesRepository.getTvShows()).thenReturn(tv)
         val tvEntities = viewModel.getTvShows()?.value
         verify(moviesRepository).getTvShows()
-        assertEquals(tv?.value?.size, tvEntities?.size)
+        assertEquals(tv?.value?.data?.size, tvEntities?.data?.size)
 
-        viewModel.getTvShows()?.observeForever(observer)
-        verify(observer).onChanged(dummyTv)
+        viewModel.getTvShows().observeForever(observer)
+        verify(observer).onChanged(dummyTv as Resource<ArrayList<TvShowsEntity>>)
     }
 
 }

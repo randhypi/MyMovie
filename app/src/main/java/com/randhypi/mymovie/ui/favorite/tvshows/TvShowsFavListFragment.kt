@@ -1,4 +1,4 @@
-package com.randhypi.mymovie.ui.home.tvshows
+package com.randhypi.mymovie.ui.favorite.tvshows
 
 import android.os.Bundle
 import android.util.Log
@@ -10,23 +10,22 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
-import com.randhypi.mymovie.databinding.FragmentTvShowsBinding
-import com.randhypi.mymovie.ui.favorite.tvshows.TvShowsFavListFragment
+import com.randhypi.mymovie.databinding.FragmentTvShowsfavBinding
+import com.randhypi.mymovie.ui.favorite.FavoriteFragmentDirections
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
+import com.randhypi.mymovie.ui.home.tvshows.TvShowsFavAdapter
+import com.randhypi.mymovie.ui.home.tvshows.TvShowsFavViewModel
 import com.randhypi.mymovie.viewModel.ViewModelFactory
-import com.randhypi.mymovie.vo.Resource
-import com.randhypi.mymovie.vo.Status
 
-class TvShowsListFragment : Fragment() {
+class TvShowsFavListFragment : Fragment() {
 
-    private var _binding: FragmentTvShowsBinding? = null
+    private var _binding: FragmentTvShowsfavBinding? = null
     private val binding get() = _binding!!
-    private lateinit var tvshowsAdapter: TvShowsAdapter
+    private lateinit var tvShowsFavAdapter: TvShowsFavAdapter
 
     companion object{
-        val TAG = TvShowsListFragment::class.java.simpleName
+        val TAG = TvShowsFavListFragment::class.java.simpleName
     }
 
     override fun onCreateView(
@@ -34,7 +33,7 @@ class TvShowsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentTvShowsBinding.inflate(inflater, container, false)
+        _binding = FragmentTvShowsfavBinding.inflate(inflater, container, false)
         val view = binding.root
 
         return view
@@ -47,7 +46,7 @@ class TvShowsListFragment : Fragment() {
 
     private fun selectedMovies(tvShows: String){
         Toast.makeText(context,"Kamu memilih ${tvShows}", Toast.LENGTH_SHORT).show()
-        val toDetail = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
+        val toDetail = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment()
         toDetail.id = tvShows
         toDetail.type = "tvshows"
 
@@ -56,30 +55,18 @@ class TvShowsListFragment : Fragment() {
 
     private fun showGridAdapter() {
         val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[TvShowsViewModel::class.java]
+        val viewModel = ViewModelProvider(this, factory)[TvShowsFavViewModel::class.java]
 
-        tvshowsAdapter = TvShowsAdapter()
-        tvshowsAdapter.notifyDataSetChanged()
+        tvShowsFavAdapter = TvShowsFavAdapter()
+        tvShowsFavAdapter.notifyDataSetChanged()
         binding.rvTvShowsList.layoutManager = GridLayoutManager(context, 2)
-        binding.rvTvShowsList.adapter = tvshowsAdapter
+        binding.rvTvShowsList.adapter = tvShowsFavAdapter
 
-        viewModel.getTvShows()?.observe(viewLifecycleOwner,{ tv ->
-
-            when(tv.status){
-                Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
-                Status.SUCCESS -> {
-                    binding?.progressBar?.visibility = View.GONE
-                    tvshowsAdapter.setData(tv.data as ArrayList<TvShowsEntity>)
-                }
-                Status.ERROR -> {
-                    binding?.progressBar?.visibility = View.GONE
-                    Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
-                }
-            }
-
+        viewModel.getTvShowsFav()?.observe(viewLifecycleOwner,{ tv ->
+            tvShowsFavAdapter.setData(tv as ArrayList<TvShowsEntity>)
         })
 
-        tvshowsAdapter.setOnItemClickCallback(object :  TvShowsAdapter.OnItemClickCallback{
+        tvShowsFavAdapter.setOnItemClickCallback(object :  TvShowsFavAdapter.OnItemClickCallback{
 
             override fun onItemClicked(data: String) {
                 if (data != null) {

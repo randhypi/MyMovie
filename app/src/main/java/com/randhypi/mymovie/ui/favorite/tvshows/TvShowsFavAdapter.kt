@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.databinding.ItemsTvshowsBinding
-import com.randhypi.mymovie.vo.Resource
+import com.randhypi.mymovie.databinding.ItemsTvshowsfavBinding
 
-class TvShowsAdapter : RecyclerView.Adapter<TvShowsAdapter.ListViewHolder>() {
+class TvShowsFavAdapter : RecyclerView.Adapter<TvShowsFavAdapter.ListViewHolder>() {
 
     private val mData = ArrayList<TvShowsEntity>()
 
@@ -40,7 +40,7 @@ class TvShowsAdapter : RecyclerView.Adapter<TvShowsAdapter.ListViewHolder>() {
     override fun getItemCount(): Int = mData.size
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemsTvshowsBinding.bind(itemView)
+        private val binding = ItemsTvshowsfavBinding.bind(itemView)
         fun bind(userItem: TvShowsEntity) {
             with(itemView) {
                 binding.tvItemTitle.text = userItem.originalName
