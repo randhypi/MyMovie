@@ -59,11 +59,11 @@ class TvShowsFavListFragment : Fragment() {
 
         tvShowsFavAdapter = TvShowsFavAdapter()
         tvShowsFavAdapter.notifyDataSetChanged()
-        binding.rvTvShowsList.layoutManager = GridLayoutManager(context, 2)
-        binding.rvTvShowsList.adapter = tvShowsFavAdapter
+        binding.rvTvShowsFavList.layoutManager = GridLayoutManager(context, 2)
+        binding.rvTvShowsFavList.adapter = tvShowsFavAdapter
 
         viewModel.getTvShowsFav()?.observe(viewLifecycleOwner,{ tv ->
-            tvShowsFavAdapter.setData(tv as ArrayList<TvShowsEntity>)
+            tvShowsFavAdapter.submitList(tv)
         })
 
         tvShowsFavAdapter.setOnItemClickCallback(object :  TvShowsFavAdapter.OnItemClickCallback{

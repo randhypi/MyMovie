@@ -1,15 +1,16 @@
 package com.randhypi.mymovie.ui.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.data.MoviesRepository
 import com.randhypi.mymovie.utils.DummyMovies
 import com.randhypi.mymovie.utils.DummyTvShows
 import org.junit.Test
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
@@ -35,12 +36,19 @@ class DetailViewModelTest {
 
     @Mock
     private lateinit var moviesObserver: Observer<MoviesEntity>
+
+    @Mock
+    lateinit var moviesFavObserver: Observer<Boolean>
+
+    @Mock
+    lateinit var tvFavObserver: Observer<Boolean>
+
     @Mock
     private lateinit var tvObserver: Observer<TvShowsEntity>
 
 
     @Before
-    fun setUp(){
+    fun setUp() {
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(moviesId)
     }
@@ -50,20 +58,11 @@ class DetailViewModelTest {
     fun getDetailMovies() {
         val movies = MutableLiveData<MoviesEntity>()
         movies.value = dummyMovies
+
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(moviesId)
 
-        `when`(moviesRepository.getDetailMovies(moviesId)).thenReturn(movies)
-        val moviesEntity = viewModel.getDetailMovies().value
-
-        verify(moviesRepository).getDetailMovies(moviesId)
-
-        assertNotNull(moviesEntity)
-
-        assertEquals(dummyMovies.poster,moviesEntity?.poster)
-        assertEquals(dummyMovies.moviesId,moviesEntity?.moviesId)
-        assertEquals(dummyMovies.title,moviesEntity?.title)
-
+        `when`(moviesRepository.getDetailMovies(moviesId!!)).thenReturn(movies)
         viewModel.getDetailMovies().observeForever(moviesObserver)
         verify(moviesObserver).onChanged(dummyMovies)
     }
@@ -75,19 +74,65 @@ class DetailViewModelTest {
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(tvShowsId)
 
+
         `when`(moviesRepository.getDetailTvShows(tvShowsId)).thenReturn(tv)
-        val tvEntity = viewModel.getDetailTvSHows().value
-
-        verify(moviesRepository).getDetailTvShows(tvShowsId)
-
-        assertNotNull(tvEntity)
-
-        assertEquals(dummyTvShows.poster,tvEntity?.poster)
-        assertEquals(dummyTvShows.id,tvEntity?.id)
-        assertEquals(dummyTvShows.name,tvEntity?.name)
 
         viewModel.getDetailTvSHows().observeForever(tvObserver)
         verify(tvObserver).onChanged(dummyTvShows)
     }
 
+    @Test
+    fun setMoviesFav() {
+        val movies = MutableLiveData<MoviesEntity>()
+        movies.value = dummyMovies
+        movies.let {
+            it.value?.favorite = !it.value?.favorite!!
+        }
+
+        viewModel = DetailViewModel(moviesRepository)
+        viewModel.setIdAndType(moviesId)
+
+        movies.value?.let { moviesRepository.setFavMovie(it) }
+        movies.value?.let { viewModel.setFavMovie(it) }
+    }
+
+    @Test
+    fun setTvShowsFav() {
+        val tv = MutableLiveData<TvShowsEntity>()
+        tv.value = dummyTvShows
+        tv.let {
+            it.value?.favorite = !it.value?.favorite!!
+        }
+
+        viewModel = DetailViewModel(moviesRepository)
+        viewModel.setIdAndType(tvShowsId)
+
+        tv.value?.let { moviesRepository.setFavTvShow(it) }
+        tv.value?.let { viewModel.setFavTvShow(it) }
+    }
+
+
+    @Test
+    fun getMoviesFav(){
+        var value = MutableLiveData<Boolean>()
+        value.value = true
+        viewModel = DetailViewModel(moviesRepository)
+
+        viewModel.moviesFav.value = value.value
+        viewModel.getMovieFav().observeForever(moviesFavObserver)
+
+        verify(moviesFavObserver).onChanged(value.value)
+    }
+
+    @Test
+    fun getTvFav(){
+        var value = MutableLiveData<Boolean>()
+        value.value = true
+        viewModel = DetailViewModel(moviesRepository)
+
+        viewModel.tvFav.value = value.value
+        viewModel.getTvFav().observeForever(tvFavObserver)
+
+        verify(tvFavObserver).onChanged(value.value)
+    }
 }

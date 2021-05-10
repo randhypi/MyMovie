@@ -3,6 +3,8 @@ package com.randhypi.mymovie.ui.home.movies
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
@@ -10,14 +12,17 @@ import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.databinding.ItemsMoviesfavBinding
 
 
-class MovieFavAdapter() : RecyclerView.Adapter<MovieFavAdapter.ListViewHolder>() {
+class MovieFavAdapter() : PagedListAdapter<MoviesEntity, MovieFavAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
-    private val mData = ArrayList<MoviesEntity>()
-
-    fun setData(items: ArrayList<MoviesEntity>) {
-        mData.clear()
-        mData.addAll(items)
-        notifyDataSetChanged()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MoviesEntity>() {
+            override fun areItemsTheSame(oldItem: MoviesEntity, newItem: MoviesEntity): Boolean {
+                return oldItem.moviesId == newItem.moviesId
+            }
+            override fun areContentsTheSame(oldItem: MoviesEntity, newItem: MoviesEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
 
@@ -34,15 +39,16 @@ class MovieFavAdapter() : RecyclerView.Adapter<MovieFavAdapter.ListViewHolder>()
     }
 
     override fun onBindViewHolder(listViewHolder: ListViewHolder, position: Int) {
-        listViewHolder.bind(mData[position])
+        val movies = getItem(position)
+        movies?.let {
+            listViewHolder.bind(it)
+        }
     }
 
-    override fun getItemCount(): Int = mData.size
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemsMoviesfavBinding.bind(itemView)
         fun bind(userItem: MoviesEntity) {
-            with(itemView) {
                 binding.tvItemTitle.text = userItem.originalTitle
                 binding.tvItemDate.text = userItem.releaseDate
 
@@ -50,7 +56,7 @@ class MovieFavAdapter() : RecyclerView.Adapter<MovieFavAdapter.ListViewHolder>()
                     .load(userItem.poster)
                     .fitCenter()
                     .into(binding.imgPoster)
-            }
+
             itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem.moviesId) }
         }
     }

@@ -90,5 +90,7 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
+
 
 }

@@ -3,10 +3,10 @@ package com.randhypi.mymovie.ui.home.tvshows
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.nhaarman.mockitokotlin2.verify
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.data.MoviesRepository
-import com.randhypi.mymovie.utils.DummyTvShows
 import com.randhypi.mymovie.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -28,11 +28,14 @@ class TvShowsViewModelTest{
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<Resource<ArrayList<TvShowsEntity>>>
+    private lateinit var observer: Observer<Resource<PagedList<TvShowsEntity>>>
 
 
     @Mock
     private lateinit var moviesRepository: MoviesRepository
+
+    @Mock
+    private lateinit var pagedList: PagedList<TvShowsEntity>
 
     @Before
     fun setUp() {
@@ -41,8 +44,9 @@ class TvShowsViewModelTest{
 
     @Test
     fun getTv() {
-        val dummyTv = Resource.success(DummyTvShows.tvShowsDummy())
-        val tv = MutableLiveData<Resource<List<TvShowsEntity>>>()
+        val dummyTv = Resource.success(pagedList)
+        `when`(dummyTv.data?.size).thenReturn(5)
+        val tv = MutableLiveData<Resource<PagedList<TvShowsEntity>>>()
         tv.value = dummyTv
 
         `when`(moviesRepository.getTvShows()).thenReturn(tv)
@@ -51,7 +55,7 @@ class TvShowsViewModelTest{
         assertEquals(tv?.value?.data?.size, tvEntities?.data?.size)
 
         viewModel.getTvShows().observeForever(observer)
-        verify(observer).onChanged(dummyTv as Resource<ArrayList<TvShowsEntity>>)
+        verify(observer).onChanged(dummyTv)
     }
 
 }

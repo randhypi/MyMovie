@@ -63,6 +63,30 @@ class MainActivityTest{
             .check(matches(withText(dummyMovies[0].releaseDate)))
     }
 
+    @Test
+    fun loadFavMovies(){
+        onView(withId(R.id.action_favorite)).perform(
+                click()
+            )
+
+        onView(withId(R.id.rvMoviesFavList))
+            .check(matches(isDisplayed()))
+        onView(withId(R.id.rvMoviesFavList))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(dummyMovies.size))
+    }
+
+    @Test
+    fun loadFavTv(){
+        onView(withId(R.id.action_favorite)).perform(
+            click()
+        )
+
+        onView(withText(R.string.tab_text_2)).perform(click())
+        onView(withId(R.id.rvTvShowsFavList))
+            .check(matches(isDisplayed()))
+        onView(withId(R.id.rvTvShowsFavList))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(dummyTvShows.size))
+    }
 
     @Test
     fun loadTvShows() {

@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.databinding.FragmentMoviesBinding
 import com.randhypi.mymovie.ui.favorite.movies.MoviesFavListFragment
 
@@ -62,12 +61,11 @@ class  MoviesListFragment : Fragment() {
         binding.rvMoviesList.adapter = moviesAdapter
 
         viewModel.getMovies().observe(viewLifecycleOwner,{ movies ->
-           // Log.d(TAG,"${movies[0].original_title} home list")
            when(movies.status){
                Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
                Status.SUCCESS -> {
                    binding?.progressBar?.visibility = View.GONE
-                   moviesAdapter.setData(movies.data as ArrayList<MoviesEntity>)
+                   moviesAdapter.submitList(movies.data)
                }
                Status.ERROR -> {
                    binding?.progressBar?.visibility = View.GONE

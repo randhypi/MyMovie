@@ -36,7 +36,6 @@ class DetailViewModel(private val moviesRepository: MoviesRepository) : ViewMode
             it.favorite = !it.favorite!!
         }
 
-
         if (detailMovies != null) {
             moviesRepository.setFavMovie(detailMovies)
             moviesFav.value = detailMovies.favorite
@@ -48,7 +47,6 @@ class DetailViewModel(private val moviesRepository: MoviesRepository) : ViewMode
             it.favorite = !it.favorite!!
         }
 
-        Log.d(TAG,detailTvShow.toString())
         if (detailTvShow != null) {
             moviesRepository.setFavTvShow(detailTvShow)
             tvFav.value = detailTvShow.favorite

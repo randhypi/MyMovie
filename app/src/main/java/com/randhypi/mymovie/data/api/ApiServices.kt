@@ -19,16 +19,16 @@ interface ApiServices {
                   @Query("page") page: String = "1"
                   ): Call<ResponseMovies>
 
-    @GET("3/movie/{movie_id}")
-    fun getDetailMovies(@Path("movie_id") id: String,@Query("api_key") api: String =  BuildConfig.MOVIE_KEY,
-    @Query("language") language: String = "en-US"): Call<ResponseDetailMovie>
-
-
     @GET("3/tv/popular")
     fun getTv(@Query("api_key") api: String =  BuildConfig.MOVIE_KEY,
               @Query("language") language: String = "en-US",
               @Query("page") page: String = "1"
     ): Call<ResponseTvShows>
+
+    @GET("3/movie/{movie_id}")
+    fun getDetailMovies(@Path("movie_id") id: String,@Query("api_key") api: String =  BuildConfig.MOVIE_KEY,
+                        @Query("language") language: String = "en-US"): Call<ResponseDetailMovie>
+
 
     @GET("3/tv/{tv_id}")
     fun getDetailTv(@Path("tv_id") id: String,@Query("api_key") api: String =  BuildConfig.MOVIE_KEY,

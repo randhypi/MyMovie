@@ -69,7 +69,7 @@ class TvShowsListFragment : Fragment() {
                 Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
                 Status.SUCCESS -> {
                     binding?.progressBar?.visibility = View.GONE
-                    tvshowsAdapter.setData(tv.data as ArrayList<TvShowsEntity>)
+                    tvshowsAdapter.submitList(tv.data)
                 }
                 Status.ERROR -> {
                     binding?.progressBar?.visibility = View.GONE

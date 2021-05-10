@@ -65,36 +65,6 @@ class RemoteDataSource {
         return resultMovies
     }
 
-    fun getDetailMovies(id: String): LiveData<ApiResponse<ResponseDetailMovie>> {
-      //  EspressoIdlingResource.increment()
-        val resultDetailMovie = MutableLiveData<ApiResponse<ResponseDetailMovie>>()
-        var service: ApiServices = ApiConfig.getApiService()
-        val callDetailMovie: Call<ResponseDetailMovie> = service.getDetailMovies(id = id)
-
-        callDetailMovie.enqueue(object : Callback<ResponseDetailMovie> {
-            override fun onResponse(
-                call: Call<ResponseDetailMovie>,
-                response: Response<ResponseDetailMovie>
-            ) {
-                if (!response.isSuccessful) {
-                    Log.d(TAG, response.code().toString())
-                    return
-                }
-
-                response.body()?.let {
-                    resultDetailMovie.value = ApiResponse.success(it)
-                }
-
-        //        EspressoIdlingResource.decrement()
-            }
-
-            override fun onFailure(call: Call<ResponseDetailMovie>, t: Throwable) {
-                Log.d(TAG, "$call\n $t}")
-            }
-        })
-        return resultDetailMovie
-    }
-
     fun getTv(): LiveData<ApiResponse<List<ResultsItemTv>>> {
    //     EspressoIdlingResource.increment()
         val resultTvShows = MutableLiveData<ApiResponse<List<ResultsItemTv>>>()
@@ -123,31 +93,61 @@ class RemoteDataSource {
         return resultTvShows
     }
 
-    fun getDetailTv(id: String): LiveData<ApiResponse<ResponseDetailTv>> {
-     //   EspressoIdlingResource.increment()
-        val resultDetailTv = MutableLiveData<ApiResponse<ResponseDetailTv>>()
-        var service: ApiServices = ApiConfig.getApiService()
-        val callDetailMovie: Call<ResponseDetailTv> = service.getDetailTv(id = id)
-
-        callDetailMovie.enqueue(object : Callback<ResponseDetailTv> {
-            override fun onResponse(
-                call: Call<ResponseDetailTv>,
-                response: Response<ResponseDetailTv>
-            ) {
-                if (!response.isSuccessful) {
-                    Log.d(TAG, response.code().toString())
-                    return
-                }
-                response.body()?.let {
-                    resultDetailTv.value = ApiResponse.success(it)
-                }
-//                EspressoIdlingResource.decrement()
-            }
-
-            override fun onFailure(call: Call<ResponseDetailTv>, t: Throwable) {
-                Log.d(TAG, "$call\n $t}")
-            }
-        })
-        return resultDetailTv
-    }
+//    fun getDetailMovies(id: String): LiveData<ApiResponse<ResponseDetailMovie>> {
+//        //  EspressoIdlingResource.increment()
+//        val resultDetailMovie = MutableLiveData<ApiResponse<ResponseDetailMovie>>()
+//        var service: ApiServices = ApiConfig.getApiService()
+//        val callDetailMovie: Call<ResponseDetailMovie> = service.getDetailMovies(id = id)
+//
+//        callDetailMovie.enqueue(object : Callback<ResponseDetailMovie> {
+//            override fun onResponse(
+//                call: Call<ResponseDetailMovie>,
+//                response: Response<ResponseDetailMovie>
+//            ) {
+//                if (!response.isSuccessful) {
+//                    Log.d(TAG, response.code().toString())
+//                    return
+//                }
+//
+//                response.body()?.let {
+//                    resultDetailMovie.value = ApiResponse.success(it)
+//                }
+//
+//                //        EspressoIdlingResource.decrement()
+//            }
+//
+//            override fun onFailure(call: Call<ResponseDetailMovie>, t: Throwable) {
+//                Log.d(TAG, "$call\n $t}")
+//            }
+//        })
+//        return resultDetailMovie
+//    }
+//
+//    fun getDetailTv(id: String): LiveData<ApiResponse<ResponseDetailTv>> {
+//     //   EspressoIdlingResource.increment()
+//        val resultDetailTv = MutableLiveData<ApiResponse<ResponseDetailTv>>()
+//        var service: ApiServices = ApiConfig.getApiService()
+//        val callDetailMovie: Call<ResponseDetailTv> = service.getDetailTv(id = id)
+//
+//        callDetailMovie.enqueue(object : Callback<ResponseDetailTv> {
+//            override fun onResponse(
+//                call: Call<ResponseDetailTv>,
+//                response: Response<ResponseDetailTv>
+//            ) {
+//                if (!response.isSuccessful) {
+//                    Log.d(TAG, response.code().toString())
+//                    return
+//                }
+//                response.body()?.let {
+//                    resultDetailTv.value = ApiResponse.success(it)
+//                }
+////                EspressoIdlingResource.decrement()
+//            }
+//
+//            override fun onFailure(call: Call<ResponseDetailTv>, t: Throwable) {
+//                Log.d(TAG, "$call\n $t}")
+//            }
+//        })
+//        return resultDetailTv
+//    }
 }

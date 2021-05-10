@@ -28,8 +28,10 @@ buildscript {
         idleResourceVersion = '3.3.0'
         materialVersion = '1.2.1'
 
-        room_version = '2.2.3'
-        roomRuntimeVersion = '2.2.5'
+        pagingVersion = '2.1.1'
+
+        room_version = '2.3.0'
+        roomRuntimeVersion = '2.3.0'
 
         recyclerViewVersion = '1.2.0'
         glideVersion = '4.11.0'

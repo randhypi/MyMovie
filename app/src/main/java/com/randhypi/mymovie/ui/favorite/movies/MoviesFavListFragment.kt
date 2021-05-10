@@ -59,12 +59,12 @@ class MoviesFavListFragment : Fragment() {
 
         movieFavAdapter = MovieFavAdapter()
         movieFavAdapter.notifyDataSetChanged()
-        binding.rvMoviesList.layoutManager = GridLayoutManager(context, 2)
-        binding.rvMoviesList.adapter = movieFavAdapter
+        binding.rvMoviesFavList.layoutManager = GridLayoutManager(context, 2)
+        binding.rvMoviesFavList.adapter = movieFavAdapter
 
         viewModel.getMoviesFav().observe(viewLifecycleOwner,{ movies ->
            // Log.d(TAG,"${movies[0].original_title} home list")
-            movieFavAdapter.setData(movies as ArrayList<MoviesEntity>)
+            movieFavAdapter.submitList(movies)
         })
 
         movieFavAdapter.setOnItemClickCallback(object : MovieFavAdapter.OnItemClickCallback{

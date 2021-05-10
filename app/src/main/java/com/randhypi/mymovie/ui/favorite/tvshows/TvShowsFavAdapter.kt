@@ -3,6 +3,8 @@ package com.randhypi.mymovie.ui.home.tvshows
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
@@ -10,16 +12,19 @@ import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.databinding.ItemsTvshowsBinding
 import com.randhypi.mymovie.databinding.ItemsTvshowsfavBinding
 
-class TvShowsFavAdapter : RecyclerView.Adapter<TvShowsFavAdapter.ListViewHolder>() {
+class TvShowsFavAdapter :  PagedListAdapter<TvShowsEntity, TvShowsFavAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
-    private val mData = ArrayList<TvShowsEntity>()
 
-    fun setData(items: ArrayList<TvShowsEntity>) {
-        mData.clear()
-        mData.addAll(items)
-        notifyDataSetChanged()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowsEntity>() {
+            override fun areItemsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+            override fun areContentsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
-
 
     private var onItemClickCallback: OnItemClickCallback? = null
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -34,15 +39,16 @@ class TvShowsFavAdapter : RecyclerView.Adapter<TvShowsFavAdapter.ListViewHolder>
     }
 
     override fun onBindViewHolder(listViewHolder: ListViewHolder, position: Int) {
-        listViewHolder.bind(mData[position])
+        val tv = getItem(position)
+        tv?.let {
+            listViewHolder.bind(it)
+        }
     }
-
-    override fun getItemCount(): Int = mData.size
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemsTvshowsfavBinding.bind(itemView)
         fun bind(userItem: TvShowsEntity) {
-            with(itemView) {
+
                 binding.tvItemTitle.text = userItem.originalName
                 binding.tvItemDate.text = userItem.date
 
@@ -50,7 +56,7 @@ class TvShowsFavAdapter : RecyclerView.Adapter<TvShowsFavAdapter.ListViewHolder>
                     .load(userItem.poster)
                     .fitCenter()
                     .into(binding.imgPoster)
-            }
+
             itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem?.id!!) }
         }
     }

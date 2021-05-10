@@ -1,21 +1,23 @@
 package com.randhypi.mymovie.data.source.local.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 
 
+
 @Dao
 interface MoviesDao {
     @Query("SELECT * FROM moviesentity")
-    fun getMovies(): LiveData<List<MoviesEntity>>
+    fun getMovies(): DataSource.Factory<Int,MoviesEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(movies: List<MoviesEntity>)
 
     @Query("SELECT * FROM tvshowsentity")
-    fun getTvShows():LiveData<List<TvShowsEntity>>
+    fun getTvShows():DataSource.Factory<Int,TvShowsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTvShows(tv: List<TvShowsEntity>)
@@ -27,13 +29,13 @@ interface MoviesDao {
     fun getDetailTvShow(tvshowsId: String): LiveData<TvShowsEntity>
 
     @Query("SELECT * FROM moviesentity WHERE favorite = :favorite")
-    fun getFavMovie(favorite: Boolean = true): LiveData<List<MoviesEntity>>
+    fun getFavMovie(favorite: Boolean = true): DataSource.Factory<Int,MoviesEntity>
+
+    @Query("SELECT * FROM tvshowsentity WHERE favorite = :favorite")
+    fun getFavTvShow(favorite: Boolean = true): DataSource.Factory<Int,TvShowsEntity>
 
     @Update()
     fun updateMovie(movies: MoviesEntity)
-
-    @Query("SELECT * FROM tvshowsentity WHERE favorite = :favorite")
-    fun getFavTvShow(favorite: Boolean = true): LiveData<List<TvShowsEntity>>
 
     @Update()
     fun updateTv(tv: TvShowsEntity)
