@@ -137,6 +137,12 @@ class DetailFragment : Fragment() {
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(40)))
                 .into(binding.ivDetail)
 
+            if (statFav){
+                favItem.setIcon(R.drawable.ic_favorite_24)
+            }else {
+                favItem.setIcon(R.drawable.ic_unfavorite24)
+            }
+
             binding.tvTitle.text = data?.name
             binding.tvOriginalTitle.text = data?.originalName
             binding.tvOriginalLanguage.text = data?.originalLanguage

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
@@ -83,37 +84,39 @@ class DetailViewModelTest {
 
     @Test
     fun setMoviesFav() {
-        val movies = MutableLiveData<MoviesEntity>()
-        movies.value = dummyMovies
-        movies.let {
-            it.value?.favorite = !it.value?.favorite!!
-        }
+        val movies = dummyMovies
+        movies.let { it.favorite = !it.favorite!! }
+
 
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(moviesId)
 
-        movies.value?.let { moviesRepository.setFavMovie(it) }
-        movies.value?.let { viewModel.setFavMovie(it) }
+        doNothing().`when`(moviesRepository).setFavMovie(movies)
+
+        viewModel.setFavMovie(movies)
+        verify(moviesRepository).setFavMovie(movies)
+
+
     }
 
     @Test
     fun setTvShowsFav() {
-        val tv = MutableLiveData<TvShowsEntity>()
-        tv.value = dummyTvShows
+        val tv = dummyTvShows
         tv.let {
-            it.value?.favorite = !it.value?.favorite!!
+            it?.favorite = !it?.favorite!!
         }
-
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(tvShowsId)
 
-        tv.value?.let { moviesRepository.setFavTvShow(it) }
-        tv.value?.let { viewModel.setFavTvShow(it) }
+        doNothing().`when`(moviesRepository).setFavTvShow(tv)
+        viewModel.setFavTvShow(tv)
+        verify(moviesRepository).setFavTvShow(tv)
+
     }
 
 
     @Test
-    fun getMoviesFav(){
+    fun getMoviesFav() {
         var value = MutableLiveData<Boolean>()
         value.value = true
         viewModel = DetailViewModel(moviesRepository)
@@ -125,7 +128,7 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun getTvFav(){
+    fun getTvFav() {
         var value = MutableLiveData<Boolean>()
         value.value = true
         viewModel = DetailViewModel(moviesRepository)

@@ -91,7 +91,6 @@ class MoviesRepositoryTest {
         verify(local).getAllMovies()
         assertNotNull(moviesEntities.data)
         assertEquals(moviesResponse.size.toLong(), moviesEntities.data?.size?.toLong())
-
     }
 
     @Test
