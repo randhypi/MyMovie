@@ -1,5 +1,6 @@
 package com.capstone.core.domain.usecase
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.capstone.core.data.Resource
@@ -7,12 +8,12 @@ import com.capstone.core.domain.model.Movies
 import com.capstone.core.domain.model.TvShows
 import com.capstone.core.domain.repository.IMoviesRepository
 
-class MoviesInteractor(private val moviesRepository: IMoviesRepository): MoviesUseCase {
+class MoviesInteractor(private val moviesRepository: IMoviesRepository) : MoviesUseCase {
     override fun getMovies(): LiveData<Resource<PagedList<Movies>>> =
         moviesRepository.getMovies()
 
 
-    override fun getTvShows(): LiveData<Resource<PagedList<TvShows>>>  =
+    override fun getTvShows(): LiveData<Resource<PagedList<TvShows>>> =
         moviesRepository.getTvShows()
 
     override fun getDetailMovies(id: String): LiveData<Movies> =
@@ -30,6 +31,9 @@ class MoviesInteractor(private val moviesRepository: IMoviesRepository): MoviesU
     override fun setFavMovie(movie: Movies) =
         moviesRepository.setFavMovie(movie)
 
-    override fun setFavTvShow(tv: TvShows)  =
+    override fun setFavTvShow(tv: TvShows) {
+        Log.d("Movies Interactor",tv.toString())
         moviesRepository.setFavTvShow(tv)
+
+    }
 }

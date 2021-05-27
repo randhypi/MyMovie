@@ -1,5 +1,6 @@
 package com.capstone.core.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.paging.*
@@ -192,6 +193,7 @@ class MoviesRepository(
 
     override fun setFavTvShow(tv: TvShows) {
      val tvShowsEntity = DataMapper.mapDomainToEntitiesTvShows(tv)
+        Log.d("Movies Repository", tvShowsEntity.toString())
         appExecutors.diskIO().execute {
             localDataSource.updateTv(tvShowsEntity)
         }

@@ -48,6 +48,7 @@ object DataMapper {
                 popularity = it.popularity,
                 poster = it.poster,
                 date = it.date,
+                favorite = it.favorite
             )
 
 
@@ -61,5 +62,6 @@ object DataMapper {
             popularity = it.popularity,
             poster = it.poster,
             date = it.date,
+            favorite = it.favorite
         )
 }
