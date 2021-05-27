@@ -6,25 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.databinding.FragmentMoviesfavBinding
-import com.randhypi.mymovie.ui.favorite.FavoriteFragment
 import com.randhypi.mymovie.ui.favorite.FavoriteFragmentDirections
-import com.randhypi.mymovie.ui.home.HomeFragmentDirections
 import com.randhypi.mymovie.ui.home.movies.MovieFavAdapter
 import com.randhypi.mymovie.ui.home.movies.MoviesFavViewModel
-import com.randhypi.mymovie.viewModel.ViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MoviesFavListFragment : Fragment() {
 
     private var _binding: FragmentMoviesfavBinding? = null
     private val binding get() = _binding!!
     private lateinit var movieFavAdapter: MovieFavAdapter
+    private val moviesFavViewModel: MoviesFavViewModel by viewModel()
 
-    companion object{
+    companion object{detai
         val TAG = MoviesFavListFragment::class.java.simpleName
     }
 
@@ -54,15 +51,14 @@ class MoviesFavListFragment : Fragment() {
     }
 
     private fun showGridAdapter() {
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[MoviesFavViewModel::class.java]
+
 
         movieFavAdapter = MovieFavAdapter()
         movieFavAdapter.notifyDataSetChanged()
         binding.rvMoviesFavList.layoutManager = GridLayoutManager(context, 2)
         binding.rvMoviesFavList.adapter = movieFavAdapter
 
-        viewModel.getMoviesFav().observe(viewLifecycleOwner,{ movies ->
+        moviesFavViewModel.getMoviesFav().observe(viewLifecycleOwner,{ movies ->
            // Log.d(TAG,"${movies[0].original_title} home list")
             movieFavAdapter.submitList(movies)
         })

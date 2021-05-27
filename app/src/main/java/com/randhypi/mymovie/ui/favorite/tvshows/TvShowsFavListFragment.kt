@@ -1,7 +1,6 @@
 package com.randhypi.mymovie.ui.favorite.tvshows
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +9,19 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.databinding.FragmentTvShowsfavBinding
 import com.randhypi.mymovie.ui.favorite.FavoriteFragmentDirections
-import com.randhypi.mymovie.ui.home.HomeFragmentDirections
 import com.randhypi.mymovie.ui.home.tvshows.TvShowsFavAdapter
 import com.randhypi.mymovie.ui.home.tvshows.TvShowsFavViewModel
-import com.randhypi.mymovie.viewModel.ViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class TvShowsFavListFragment : Fragment() {
 
     private var _binding: FragmentTvShowsfavBinding? = null
     private val binding get() = _binding!!
     private lateinit var tvShowsFavAdapter: TvShowsFavAdapter
+    private val viewModel: TvShowsFavViewModel by viewModel()
 
     companion object{
         val TAG = TvShowsFavListFragment::class.java.simpleName
@@ -54,8 +53,6 @@ class TvShowsFavListFragment : Fragment() {
     }
 
     private fun showGridAdapter() {
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[TvShowsFavViewModel::class.java]
 
         tvShowsFavAdapter = TvShowsFavAdapter()
         tvShowsFavAdapter.notifyDataSetChanged()

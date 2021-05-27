@@ -10,9 +10,9 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.utils.DummyMovies
-import com.randhypi.mymovie.utils.DummyTvShows
-import com.randhypi.mymovie.utils.EspressoIdlingResource
+import com.capstone.core.utils.DummyMovies
+import com.capstone.core.utils.DummyTvShows
+import com.capstone.core.utils.EspressoIdlingResource
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -115,6 +115,59 @@ class MainActivityTest{
             .check(matches(isDisplayed()))
        onView(withId(R.id.tv_release_date))
             .check(matches(withText(dummyTvShows[0].date)))
+    }
+
+
+    @Test
+    fun clickFavTvShows() {
+        onView(withText(R.string.tab_text_2)).perform(click())
+        onView(withId(R.id.rvTvShowsList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+
+        onView(withId(R.id.action_favorite)).perform(click())
+    }
+
+    @Test
+    fun clickDelFavTvShows() {
+        onView(withText(R.string.tab_text_2)).perform(click())
+        onView(withId(R.id.rvTvShowsList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+
+        onView(withId(R.id.action_favorite)).perform(click())
+    }
+
+    @Test
+    fun clickFavMovies() {
+        onView(withText(R.string.tab_text_1)).perform(click())
+        onView(withId(R.id.rvMoviesList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+
+        onView(withId(R.id.action_favorite)).perform(click())
+    }
+
+    @Test
+    fun clickDelFavMovies() {
+        onView(withText(R.string.tab_text_1)).perform(click())
+        onView(withId(R.id.rvMoviesList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+
+        onView(withId(R.id.action_favorite)).perform(click())
     }
 
 }

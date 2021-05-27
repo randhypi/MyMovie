@@ -1,16 +1,11 @@
 package com.randhypi.mymovie.ui.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.doNothing
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
-import com.randhypi.mymovie.data.MoviesRepository
-import com.randhypi.mymovie.utils.DummyMovies
-import com.randhypi.mymovie.utils.DummyTvShows
+import com.capstone.core.utils.DummyMovies
+import com.capstone.core.utils.DummyTvShows
 import org.junit.Test
 import org.junit.Before
 import org.junit.Rule
@@ -33,10 +28,10 @@ class DetailViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var moviesRepository: MoviesRepository
+    private lateinit var moviesRepository: com.capstone.core.data.MoviesRepository
 
     @Mock
-    private lateinit var moviesObserver: Observer<MoviesEntity>
+    private lateinit var moviesObserver: Observer<com.capstone.core.data.source.local.entity.MoviesEntity>
 
     @Mock
     lateinit var moviesFavObserver: Observer<Boolean>
@@ -45,7 +40,7 @@ class DetailViewModelTest {
     lateinit var tvFavObserver: Observer<Boolean>
 
     @Mock
-    private lateinit var tvObserver: Observer<TvShowsEntity>
+    private lateinit var tvObserver: Observer<com.capstone.core.data.source.local.entity.TvShowsEntity>
 
 
     @Before
@@ -57,7 +52,7 @@ class DetailViewModelTest {
 
     @Test
     fun getDetailMovies() {
-        val movies = MutableLiveData<MoviesEntity>()
+        val movies = MutableLiveData<com.capstone.core.data.source.local.entity.MoviesEntity>()
         movies.value = dummyMovies
 
         viewModel = DetailViewModel(moviesRepository)
@@ -70,7 +65,7 @@ class DetailViewModelTest {
 
     @Test
     fun getDetailTvSHows() {
-        val tv = MutableLiveData<TvShowsEntity>()
+        val tv = MutableLiveData<com.capstone.core.data.source.local.entity.TvShowsEntity>()
         tv.value = dummyTvShows
         viewModel = DetailViewModel(moviesRepository)
         viewModel.setIdAndType(tvShowsId)

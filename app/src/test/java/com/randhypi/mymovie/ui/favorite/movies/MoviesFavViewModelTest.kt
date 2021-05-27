@@ -5,11 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.nhaarman.mockitokotlin2.verify
-import com.randhypi.mymovie.data.MoviesRepository
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
 import com.randhypi.mymovie.ui.home.movies.MoviesFavViewModel
-import com.randhypi.mymovie.utils.DummyMovies
-import com.randhypi.mymovie.vo.Resource
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -31,14 +27,14 @@ class MoviesFavViewModelTest{
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<PagedList<MoviesEntity>>
+    private lateinit var observer: Observer<PagedList<com.capstone.core.data.source.local.entity.MoviesEntity>>
 
 
     @Mock
-    private lateinit var moviesRepository: MoviesRepository
+    private lateinit var moviesRepository: com.capstone.core.data.MoviesRepository
 
     @Mock
-    private lateinit var pagedList: PagedList<MoviesEntity>
+    private lateinit var pagedList: PagedList<com.capstone.core.data.source.local.entity.MoviesEntity>
 
     @Before
     fun setUp() {
@@ -49,14 +45,14 @@ class MoviesFavViewModelTest{
     fun getMoviesFav() {
         val dummyMovies = pagedList
         `when`(dummyMovies.size).thenReturn(5)
-        val movies = MutableLiveData<PagedList<MoviesEntity>>()
+        val movies = MutableLiveData<PagedList<com.capstone.core.data.source.local.entity.MoviesEntity>>()
         movies.value = dummyMovies
 
 
         `when`(moviesRepository.getFavMovies()).thenReturn(movies)
         val moviesEntities = viewModel.getMoviesFav()?.value
 
-        verify<MoviesRepository>(moviesRepository, Mockito.times(1)).getFavMovies()
+        verify<com.capstone.core.data.MoviesRepository>(moviesRepository, Mockito.times(1)).getFavMovies()
         Assert.assertEquals(5, moviesEntities?.size)
 
 

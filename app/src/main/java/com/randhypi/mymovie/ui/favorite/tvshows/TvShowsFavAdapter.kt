@@ -8,19 +8,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
+import TvShows
+import com.capstone.core.domain.model.TvShows
 import com.randhypi.mymovie.databinding.ItemsTvshowsBinding
 import com.randhypi.mymovie.databinding.ItemsTvshowsfavBinding
 
-class TvShowsFavAdapter :  PagedListAdapter<TvShowsEntity, TvShowsFavAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class TvShowsFavAdapter :  PagedListAdapter<TvShows, TvShowsFavAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowsEntity>() {
-            override fun areItemsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShows>() {
+            override fun areItemsTheSame(oldItem: TvShows, newItem: TvShows): Boolean {
                 return oldItem.id == newItem.id
             }
-            override fun areContentsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
+            override fun areContentsTheSame(oldItem: TvShows, newItem: TvShows): Boolean {
                 return oldItem == newItem
             }
         }
@@ -47,7 +48,7 @@ class TvShowsFavAdapter :  PagedListAdapter<TvShowsEntity, TvShowsFavAdapter.Lis
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemsTvshowsfavBinding.bind(itemView)
-        fun bind(userItem: TvShowsEntity) {
+        fun bind(userItem: TvShows) {
 
                 binding.tvItemTitle.text = userItem.originalName
                 binding.tvItemDate.text = userItem.date

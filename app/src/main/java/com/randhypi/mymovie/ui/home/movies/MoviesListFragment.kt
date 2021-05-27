@@ -6,21 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.randhypi.mymovie.databinding.FragmentMoviesBinding
 import com.randhypi.mymovie.ui.favorite.movies.MoviesFavListFragment
-
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
-import com.randhypi.mymovie.viewModel.ViewModelFactory
-import com.randhypi.mymovie.vo.Status
+import com.capstone.core.data.Status
+import com.capstone.core.ui.MoviesAdapter
+
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class  MoviesListFragment : Fragment() {
 
     private var _binding: FragmentMoviesBinding? = null
     private val binding get() = _binding!!
     private lateinit var moviesAdapter: MoviesAdapter
+    private val viewModel: MoviesViewModel by viewModel()
 
     companion object{
         val TAG = MoviesFavListFragment::class.java.simpleName
@@ -52,8 +53,6 @@ class  MoviesListFragment : Fragment() {
     }
 
     private fun showGridAdapter() {
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[MoviesViewModel::class.java]
 
         moviesAdapter = MoviesAdapter()
         moviesAdapter.notifyDataSetChanged()

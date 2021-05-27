@@ -1,7 +1,6 @@
 package com.randhypi.mymovie.ui.home.tvshows
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,20 +9,19 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.databinding.FragmentTvShowsBinding
-import com.randhypi.mymovie.ui.favorite.tvshows.TvShowsFavListFragment
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
-import com.randhypi.mymovie.viewModel.ViewModelFactory
-import com.randhypi.mymovie.vo.Resource
-import com.randhypi.mymovie.vo.Status
+import org.koin.android.viewmodel.ext.android.viewModel
+import com.capstone.core.data.Status
+import com.capstone.core.ui.TvShowsAdapter
 
 class TvShowsListFragment : Fragment() {
 
     private var _binding: FragmentTvShowsBinding? = null
     private val binding get() = _binding!!
     private lateinit var tvshowsAdapter: TvShowsAdapter
+    private val viewModel: TvShowsViewModel by viewModel()
+
 
     companion object{
         val TAG = TvShowsListFragment::class.java.simpleName
@@ -55,8 +53,6 @@ class TvShowsListFragment : Fragment() {
     }
 
     private fun showGridAdapter() {
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[TvShowsViewModel::class.java]
 
         tvshowsAdapter = TvShowsAdapter()
         tvshowsAdapter.notifyDataSetChanged()

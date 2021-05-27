@@ -4,10 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
-import com.randhypi.mymovie.data.MoviesRepository
-import com.randhypi.mymovie.utils.DummyMovies
-import com.randhypi.mymovie.vo.Resource
+import com.capstone.core.data.Resource
+import com.capstone.core.data.source.local.entity.MoviesEntity
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
@@ -32,10 +30,10 @@ class MoviesViewModelTest{
 
 
     @Mock
-    private lateinit var moviesRepository: MoviesRepository
+    private lateinit var moviesRepository: com.capstone.core.data.MoviesRepository
 
     @Mock
-    private lateinit var pagedList: PagedList<MoviesEntity>
+    private lateinit var pagedList: PagedList<com.capstone.core.data.source.local.entity.MoviesEntity>
 
     @Before
     fun setUp() {
@@ -52,7 +50,7 @@ class MoviesViewModelTest{
         `when`(moviesRepository.getMovies()).thenReturn(movies)
         val moviesEntities = viewModel.getMovies()?.value
 
-        verify<MoviesRepository>(moviesRepository, times(1)).getMovies()
+        verify<com.capstone.core.data.MoviesRepository>(moviesRepository, times(1)).getMovies()
         assertEquals(5,moviesEntities?.data?.size)
 
         viewModel.getMovies()?.observeForever(observer)

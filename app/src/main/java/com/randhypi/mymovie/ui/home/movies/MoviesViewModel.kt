@@ -3,12 +3,12 @@ package com.randhypi.mymovie.ui.home.movies
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
-import com.randhypi.mymovie.data.MoviesRepository
-import com.randhypi.mymovie.vo.Resource
+import com.capstone.core.data.Resource
+import com.capstone.core.domain.model.Movies
+import com.capstone.core.domain.usecase.MoviesUseCase
 
-@Suppress("UNCHECKED_CAST")
-class MoviesViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
-    fun getMovies(): LiveData<Resource<PagedList<MoviesEntity>>> = moviesRepository.getMovies()
+
+class MoviesViewModel(private val moviesUseCase: MoviesUseCase) : ViewModel() {
+    fun getMovies(): LiveData<Resource<PagedList<Movies>>> = moviesUseCase.getMovies()
 }
 

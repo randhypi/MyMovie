@@ -9,21 +9,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.capstone.core.domain.model.Movies
+import com.capstone.core.domain.model.TvShows
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.databinding.FragmentDetailBinding
-import com.randhypi.mymovie.viewModel.ViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: DetailViewModel by viewModel()
 
 
     private var statFav: Boolean = false
@@ -47,9 +47,6 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
-
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(viewModelStore, factory)[DetailViewModel::class.java]
 
         val idArg = DetailFragmentArgs.fromBundle(arguments as Bundle).id
         val typeArg = DetailFragmentArgs.fromBundle(arguments as Bundle).type
@@ -87,8 +84,7 @@ class DetailFragment : Fragment() {
 
     private fun showDataMovies() {
         binding.myToolbar.title = "Movies Detail"
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
+
         val favItem = binding.myToolbar.menu.findItem(R.id.action_favorite)
 
         viewModel.getDetailMovies().observe(viewLifecycleOwner, { data ->
@@ -99,9 +95,9 @@ class DetailFragment : Fragment() {
 
                 btnFavMovie(data)
 
-                if (statFav){
+                if (statFav) {
                     favItem.setIcon(R.drawable.ic_favorite_24)
-                }else {
+                } else {
                     favItem.setIcon(R.drawable.ic_unfavorite24)
                 }
 
@@ -122,8 +118,6 @@ class DetailFragment : Fragment() {
     }
 
     private fun showDataTvShows() {
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
         val favItem = binding.myToolbar.menu.findItem(R.id.action_favorite)
         binding.myToolbar.title = "Tv Show Detail"
 
@@ -137,9 +131,9 @@ class DetailFragment : Fragment() {
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(40)))
                 .into(binding.ivDetail)
 
-            if (statFav){
+            if (statFav) {
                 favItem.setIcon(R.drawable.ic_favorite_24)
-            }else {
+            } else {
                 favItem.setIcon(R.drawable.ic_unfavorite24)
             }
 
@@ -153,13 +147,11 @@ class DetailFragment : Fragment() {
     }
 
 
-    fun btnFavMovie(data: MoviesEntity) {
+    fun btnFavMovie(data: Movies) {
         binding.myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_favorite -> {
                     Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
-                    val factory = ViewModelFactory.getInstance(requireActivity())
-                    val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
                     viewModel.setFavMovie(data)
                     true
                 }
@@ -169,14 +161,12 @@ class DetailFragment : Fragment() {
     }
 
 
-    fun btnFavTv(data: TvShowsEntity) {
+    fun btnFavTv(data: TvShows) {
 
         binding.myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_favorite -> {
                     Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
-                    val factory = ViewModelFactory.getInstance(requireActivity())
-                    val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
                     viewModel.setFavTvShow(data)
                     true
                 }
@@ -186,9 +176,7 @@ class DetailFragment : Fragment() {
     }
 
     fun updateFav(type: String) {
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
-        val favItem = binding.myToolbar.menu.findItem(R.id.action_favorite)
+      val favItem = binding.myToolbar.menu.findItem(R.id.action_favorite)
         if (type.equals(MOVIESARG)) {
             viewModel.getMovieFav().observe(viewLifecycleOwner, {
                 statFav = it

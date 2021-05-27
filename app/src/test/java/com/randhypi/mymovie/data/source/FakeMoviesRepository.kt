@@ -2,27 +2,25 @@ package com.randhypi.mymovie.data
 
 import androidx.lifecycle.LiveData
 import androidx.paging.*
-import com.randhypi.mymovie.data.source.local.LocalDataSource
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
-import com.randhypi.mymovie.data.source.remote.ApiResponse
 import com.randhypi.mymovie.data.source.remote.response.RemoteDataSource
 import com.randhypi.mymovie.data.source.response.ResultsItem
 import com.randhypi.mymovie.data.source.response.ResultsItemTv
-import com.randhypi.mymovie.utils.AppExecutors
-import com.randhypi.mymovie.vo.Resource
+import com.capstone.core.utils.AppExecutors
+import com.capstone.core.data.Resource
+import com.capstone.core.data.source.local.entity.MoviesEntity
+import com.capstone.core.data.source.local.entity.TvShowsEntity
 
 class FakeMoviesRepository constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource,
+    private val localDataSource: com.capstone.core.data.source.local.LocalDataSource,
     private val appExecutors: AppExecutors
 ) :
-    MoviesDataSource {
+    com.capstone.core.data.MoviesDataSource {
 
     override fun getMovies(): LiveData<Resource<PagedList<MoviesEntity>>> {
         return object :
-            NetworkBoundResource<PagedList<MoviesEntity>, List<ResultsItem>>(appExecutors) {
-            override fun loadFromDB(): LiveData<PagedList<MoviesEntity>> {
+            com.capstone.core.data.NetworkBoundResource<PagedList<com.capstone.core.data.source.local.entity.MoviesEntity>, List<ResultsItem>>(appExecutors) {
+            override fun loadFromDB(): LiveData<PagedList<com.capstone.core.data.source.local.entity.MoviesEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
                     .setInitialLoadSizeHint(4)
@@ -33,16 +31,16 @@ class FakeMoviesRepository constructor(
             }
 
 
-            override fun shouldFetch(data: PagedList<MoviesEntity>?): Boolean =
+            override fun shouldFetch(data: PagedList<com.capstone.core.data.source.local.entity.MoviesEntity>?): Boolean =
                 data == null || data.isEmpty()
 
 
-            override fun createCall(): LiveData<ApiResponse<List<ResultsItem>>> =
+            override fun createCall(): LiveData<com.capstone.core.data.source.remote.ApiResponse<List<ResultsItem>>> =
                 remoteDataSource.getMovies()
 
 
             override fun saveCallResult(data: List<ResultsItem>) {
-                val moviesArrayList = ArrayList<MoviesEntity>()
+                val moviesArrayList = ArrayList<com.capstone.core.data.source.local.entity.MoviesEntity>()
                 for (response in data) {
                     val id = response?.id.toString()
                     val original_language = response?.originalLanguage
@@ -53,7 +51,7 @@ class FakeMoviesRepository constructor(
                     val overview = response?.overview
                     val popularity = response?.popularity
 
-                    var movie = MoviesEntity(
+                    var movie = com.capstone.core.data.source.local.entity.MoviesEntity(
                         id,
                         original_language,
                         original_title,
@@ -73,8 +71,8 @@ class FakeMoviesRepository constructor(
 
     override fun getTvShows(): LiveData<Resource<PagedList<TvShowsEntity>>> {
         return object :
-            NetworkBoundResource<PagedList<TvShowsEntity>, List<ResultsItemTv>>(appExecutors) {
-            override fun loadFromDB(): LiveData<PagedList<TvShowsEntity>> {
+            com.capstone.core.data.NetworkBoundResource<PagedList<com.capstone.core.data.source.local.entity.TvShowsEntity>, List<ResultsItemTv>>(appExecutors) {
+            override fun loadFromDB(): LiveData<PagedList<com.capstone.core.data.source.local.entity.TvShowsEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
                     .setInitialLoadSizeHint(4)
@@ -84,15 +82,15 @@ class FakeMoviesRepository constructor(
             }
 
 
-            override fun shouldFetch(data: PagedList<TvShowsEntity>?): Boolean =
+            override fun shouldFetch(data: PagedList<com.capstone.core.data.source.local.entity.TvShowsEntity>?): Boolean =
                 data == null || data.isEmpty()
 
-            override fun createCall(): LiveData<ApiResponse<List<ResultsItemTv>>> =
+            override fun createCall(): LiveData<com.capstone.core.data.source.remote.ApiResponse<List<ResultsItemTv>>> =
                 remoteDataSource.getTv()
 
 
             override fun saveCallResult(data: List<ResultsItemTv>) {
-                val tvList = ArrayList<TvShowsEntity>()
+                val tvList = ArrayList<com.capstone.core.data.source.local.entity.TvShowsEntity>()
                 for (response in data) {
                     val id = response?.id!!.toString()
                     val original_language = response?.originalLanguage!!
@@ -103,7 +101,7 @@ class FakeMoviesRepository constructor(
                     val overview = response?.overview!!
                     val popularity = response?.voteAverage!!
 
-                    var tv = TvShowsEntity(
+                    var tv = com.capstone.core.data.source.local.entity.TvShowsEntity(
                         id = id,
                         name = title,
                         originalName = original_title,
@@ -120,13 +118,13 @@ class FakeMoviesRepository constructor(
         }.asLiveData()
     }
 
-    override fun getDetailMovies(id: String): LiveData<MoviesEntity> =
+    override fun getDetailMovies(id: String): LiveData<com.capstone.core.data.source.local.entity.MoviesEntity> =
         localDataSource.getDetailMovie(id)
 
-    override fun getDetailTvShows(id: String): LiveData<TvShowsEntity> =
+    override fun getDetailTvShows(id: String): LiveData<com.capstone.core.data.source.local.entity.TvShowsEntity> =
         localDataSource.getDetailTv(id)
 
-    override fun getFavMovies(): LiveData<PagedList<MoviesEntity>> {
+    override fun getFavMovies(): LiveData<PagedList<com.capstone.core.data.source.local.entity.MoviesEntity>> {
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(4)
@@ -137,7 +135,7 @@ class FakeMoviesRepository constructor(
     }
 
 
-    override fun getFavTvShows(): LiveData<PagedList<TvShowsEntity>> {
+    override fun getFavTvShows(): LiveData<PagedList<com.capstone.core.data.source.local.entity.TvShowsEntity>> {
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(4)
@@ -147,10 +145,10 @@ class FakeMoviesRepository constructor(
 
     }
 
-    override fun setFavMovie(movie: MoviesEntity) =
+    override fun setFavMovie(movie: com.capstone.core.data.source.local.entity.MoviesEntity) =
         appExecutors.diskIO().execute { localDataSource.updateMovie(movie) }
 
-    override fun setFavTvShow(tv: TvShowsEntity) =
+    override fun setFavTvShow(tv: com.capstone.core.data.source.local.entity.TvShowsEntity) =
         appExecutors.diskIO().execute { localDataSource.updateTv(tv) }
 
 

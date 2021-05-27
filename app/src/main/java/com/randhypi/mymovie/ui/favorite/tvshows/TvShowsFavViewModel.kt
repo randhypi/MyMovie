@@ -3,9 +3,10 @@ package com.randhypi.mymovie.ui.home.tvshows
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
-import com.randhypi.mymovie.data.MoviesRepository
+import com.capstone.core.domain.model.Movies
+import com.capstone.core.domain.model.TvShows
+import com.capstone.core.domain.usecase.MoviesUseCase
 
-class TvShowsFavViewModel(private val moviesRepository: MoviesRepository): ViewModel() {
-    fun getTvShowsFav(): LiveData<PagedList<TvShowsEntity>>? = moviesRepository.getFavTvShows()
+class TvShowsFavViewModel(private val moviesUseCase: MoviesUseCase): ViewModel() {
+    fun getTvShowsFav(): LiveData<PagedList<TvShows>>? = moviesUseCase.getFavTvShows()
 }

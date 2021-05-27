@@ -5,16 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.nhaarman.mockitokotlin2.verify
 import com.randhypi.mymovie.data.FakeMoviesRepository
-import com.randhypi.mymovie.data.source.local.LocalDataSource
-import com.randhypi.mymovie.data.source.local.entity.MoviesEntity
-import com.randhypi.mymovie.data.source.local.entity.TvShowsEntity
 import com.randhypi.mymovie.data.source.remote.response.RemoteDataSource
-import com.randhypi.mymovie.data.source.remote.response.ResponseDetailMovie
-import com.randhypi.mymovie.data.source.remote.response.ResponseDetailTv
+import com.capstone.core.utils.AppExecutors
+import com.capstone.core.utils.DummyMovies
+import com.capstone.core.utils.DummyTvShows
+import com.capstone.core.utils.TestExecutor
 import com.randhypi.mymovie.data.source.response.ResultsItem
 import com.randhypi.mymovie.data.source.response.ResultsItemTv
 import com.randhypi.mymovie.utils.*
-import com.randhypi.mymovie.vo.Resource
+import com.capstone.core.data.Resource
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -26,7 +25,7 @@ class MoviesRepositoryTest {
 
 
     private val remote = mock(RemoteDataSource::class.java)
-    private val local = mock(LocalDataSource::class.java)
+    private val local = mock(com.capstone.core.data.source.local.LocalDataSource::class.java)
     private val appExecutors: AppExecutors = AppExecutors(TestExecutor(), TestExecutor(), TestExecutor())
 
     @get:Rule
@@ -48,14 +47,16 @@ class MoviesRepositoryTest {
             id = it?.moviesId!!.toInt())
     }
     private val moviesDetailResponse = DummyMovies.moviesDummy().map{
-        ResponseDetailMovie(overview = it?.overview,
+        com.capstone.core.data.source.remote.response.ResponseDetailMovie(
+            overview = it?.overview,
             originalLanguage = it?.originalLanguage,
             originalTitle = it?.originalTitle,
             title = it?.title,
             posterPath = it?.poster,
             releaseDate = it?.releaseDate,
             popularity = it?.popularity,
-            id = it?.moviesId!!.toInt())
+            id = it?.moviesId!!.toInt()
+        )
     }.first()
     private val tvId = DummyTvShows.tvShowsDummy()[0].id
     private val tvResponse = DummyTvShows.tvShowsDummy().map {
@@ -69,20 +70,22 @@ class MoviesRepositoryTest {
             id = it?.id!!.toInt())
     }
     private  val tvDetailResponse = DummyTvShows.tvShowsDummy().map{
-        ResponseDetailTv(overview = it?.overview,
+        com.capstone.core.data.source.remote.response.ResponseDetailTv(
+            overview = it?.overview,
             originalLanguage = it?.originalLanguage,
             originalName = it?.originalName,
             name = it?.name,
             posterPath = it?.poster,
             firstAirDate = it?.date,
             popularity = it?.popularity,
-            id = it?.id!!.toInt())
+            id = it?.id!!.toInt()
+        )
     }.first()
 
 
     @Test
     fun getAllMovies() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MoviesEntity>
+        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, com.capstone.core.data.source.local.entity.MoviesEntity>
         `when`(local.getAllMovies()).thenReturn(dataSourceFactory)
 
         moviesRepository.getMovies()
@@ -95,7 +98,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun getAllTv() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, TvShowsEntity>
+        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, com.capstone.core.data.source.local.entity.TvShowsEntity>
         `when`(local.getAllTv()).thenReturn(dataSourceFactory)
         moviesRepository.getTvShows()
 
@@ -107,7 +110,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun getDetailMovies() {
-        val dummyMovies = MutableLiveData<MoviesEntity>()
+        val dummyMovies = MutableLiveData<com.capstone.core.data.source.local.entity.MoviesEntity>()
         dummyMovies.value = DummyMovies.moviesDummy()[0]
         `when`(local.getDetailMovie(moviesId)).thenReturn(dummyMovies)
 
@@ -122,7 +125,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun getDetailTv() {
-        val dummyTv = MutableLiveData<TvShowsEntity>()
+        val dummyTv = MutableLiveData<com.capstone.core.data.source.local.entity.TvShowsEntity>()
         dummyTv.value = DummyTvShows.tvShowsDummy()[0]
         `when`(local.getDetailTv(tvId)).thenReturn(dummyTv)
 
@@ -137,7 +140,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun getFavMovies() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MoviesEntity>
+        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, com.capstone.core.data.source.local.entity.MoviesEntity>
         `when`(local.getFavMovie()).thenReturn(dataSourceFactory)
         moviesRepository.getFavMovies()
 
@@ -151,7 +154,7 @@ class MoviesRepositoryTest {
 
     @Test
     fun getFavTv() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, TvShowsEntity>
+        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, com.capstone.core.data.source.local.entity.TvShowsEntity>
         `when`(local.getFavTv()).thenReturn(dataSourceFactory)
         moviesRepository.getFavTvShows()
 
