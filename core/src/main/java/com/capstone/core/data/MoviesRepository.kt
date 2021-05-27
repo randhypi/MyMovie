@@ -20,24 +20,8 @@ class MoviesRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
-) :
-    IMoviesRepository {
-    companion object {
-        @Volatile
-        private var instance: MoviesRepository? = null
-        fun getInstance(
-            remoteData: RemoteDataSource,
-            localDataSource: LocalDataSource,
-            appExecutors: AppExecutors
-        ): MoviesRepository =
-            instance ?: synchronized(this) {
-                instance ?: MoviesRepository(
-                    remoteData,
-                    localDataSource,
-                    appExecutors
-                ).apply { instance = this }
-            }
-    }
+) :  IMoviesRepository {
+
 
     override fun getMovies(): LiveData<Resource<PagedList<Movies>>> {
         return object :
@@ -207,9 +191,10 @@ class MoviesRepository(
     }
 
     override fun setFavTvShow(tv: TvShows) {
-
      val tvShowsEntity = DataMapper.mapDomainToEntitiesTvShows(tv)
-        appExecutors.diskIO().execute { localDataSource.updateTv(tvShowsEntity) }
+        appExecutors.diskIO().execute {
+            localDataSource.updateTv(tvShowsEntity)
+        }
 
     }
 

@@ -21,7 +21,7 @@ class MoviesFavListFragment : Fragment() {
     private lateinit var movieFavAdapter: MovieFavAdapter
     private val moviesFavViewModel: MoviesFavViewModel by viewModel()
 
-    companion object{detai
+    companion object{
         val TAG = MoviesFavListFragment::class.java.simpleName
     }
 

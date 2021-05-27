@@ -2,8 +2,7 @@ package com.capstone.core.domain.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.bumptech.glide.load.engine.Resource
-import com.capstone.core.data.MoviesRepository
+import com.capstone.core.data.Resource
 import com.capstone.core.domain.model.Movies
 import com.capstone.core.domain.model.TvShows
 import com.capstone.core.domain.repository.IMoviesRepository

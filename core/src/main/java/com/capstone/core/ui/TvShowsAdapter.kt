@@ -7,9 +7,9 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.capstone.core.R
 import com.capstone.core.databinding.ItemsTvshowsBinding
-import com.randhypi.mymovie.R
-import com.randhypi.mymovie.databinding.ItemsTvshowsBinding
+import com.capstone.core.domain.model.TvShows
 
 class TvShowsAdapter : PagedListAdapter<TvShows, TvShowsAdapter.ListViewHolder>(
     DIFF_CALLBACK

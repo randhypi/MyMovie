@@ -1,4 +1,4 @@
-package com.capstone.core.ui
+package com.randhypi.mymovie.ui.home
 
 
 import androidx.annotation.StringRes

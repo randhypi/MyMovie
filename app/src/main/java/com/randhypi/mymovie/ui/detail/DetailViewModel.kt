@@ -40,6 +40,7 @@ class DetailViewModel(private val moviesUseCase: MoviesUseCase) : ViewModel() {
         }
 
         if (detailMovies != null) {
+            Log.d("DETAIL MOVIE",detailMovies.toString())
             moviesUseCase.setFavMovie(detailMovies)
             moviesFav.value = detailMovies.favorite?.let { it }
         }
@@ -51,8 +52,9 @@ class DetailViewModel(private val moviesUseCase: MoviesUseCase) : ViewModel() {
         }
 
         if (detailTvShow != null) {
+            Log.d("DETAIL TV",detailTvShow.toString())
             moviesUseCase.setFavTvShow(detailTvShow)
-            tvFav.value = detailTvShow.favorite?.let { it }
+            tvFav.value = detailTvShow.favorite!!
         }
     }
 

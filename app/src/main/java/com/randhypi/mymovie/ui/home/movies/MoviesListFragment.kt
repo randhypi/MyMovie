@@ -13,7 +13,6 @@ import com.randhypi.mymovie.ui.favorite.movies.MoviesFavListFragment
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
 import com.capstone.core.data.Status
 import com.capstone.core.ui.MoviesAdapter
-
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class  MoviesListFragment : Fragment() {

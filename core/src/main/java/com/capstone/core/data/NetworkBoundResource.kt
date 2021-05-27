@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.capstone.core.data.source.remote.ApiResponse
 import com.capstone.core.data.source.remote.StatusResponse
-import com.randhypi.mymovie.utils.AppExecutors
-import com.randhypi.mymovie.vo.Resource
+import com.capstone.core.utils.AppExecutors
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
 

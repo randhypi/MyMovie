@@ -7,9 +7,9 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.capstone.core.R
 import com.capstone.core.databinding.ItemsMoviesBinding
 import com.capstone.core.domain.model.Movies
-import com.randhypi.mymovie.R
 
 
 class MoviesAdapter() : PagedListAdapter<Movies, MoviesAdapter.ListViewHolder>(

@@ -1,8 +1,7 @@
 package com.capstone.core.data.api
 
 
-import androidx.viewbinding.BuildConfig
-import com.randhypi.mymovie.BuildConfig
+import com.capstone.core.BuildConfig
 import com.capstone.core.data.source.remote.response.ResponseDetailMovie
 import com.capstone.core.data.source.remote.response.ResponseDetailTv
 import com.randhypi.mymovie.data.source.response.ResponseMovies

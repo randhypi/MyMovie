@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
-import TvShows
 import com.capstone.core.domain.model.TvShows
-import com.randhypi.mymovie.databinding.ItemsTvshowsBinding
 import com.randhypi.mymovie.databinding.ItemsTvshowsfavBinding
 
 class TvShowsFavAdapter :  PagedListAdapter<TvShows, TvShowsFavAdapter.ListViewHolder>(DIFF_CALLBACK) {

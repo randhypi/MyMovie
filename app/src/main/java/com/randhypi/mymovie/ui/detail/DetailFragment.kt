@@ -122,27 +122,32 @@ class DetailFragment : Fragment() {
         binding.myToolbar.title = "Tv Show Detail"
 
         viewModel.getDetailTvSHows().observe(viewLifecycleOwner, { data ->
-            Log.d(TAG, data.toString())
-            statFav = data.favorite ?: false
-            btnFavTv(data)
-            Glide.with(requireContext())
-                .load(data.poster!!)
-                .override(400, 700)
-                .apply(RequestOptions.bitmapTransform(RoundedCorners(40)))
-                .into(binding.ivDetail)
+            if (data != null) {
+                Log.d(TAG, "$statFav on")
+                statFav = data.favorite!!
+                Log.d(TAG, "$statFav yap")
 
-            if (statFav) {
-                favItem.setIcon(R.drawable.ic_favorite_24)
-            } else {
-                favItem.setIcon(R.drawable.ic_unfavorite24)
+                btnFavTv(data)
+
+                if (statFav) {
+                    favItem.setIcon(R.drawable.ic_favorite_24)
+                } else {
+                    favItem.setIcon(R.drawable.ic_unfavorite24)
+                }
+
+                Glide.with(requireContext())
+                    .load(data.poster!!)
+                    .override(400, 700)
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(40)))
+                    .into(binding.ivDetail)
+
+                binding.tvTitle.text = data?.name
+                binding.tvOriginalTitle.text = data?.originalName
+                binding.tvOriginalLanguage.text = data?.originalLanguage
+                binding.tvReleaseDate.text = data?.date
+                binding.tvOverview.text = data?.overview
+                binding.tvPopularity.text = data?.popularity.toString()
             }
-
-            binding.tvTitle.text = data?.name
-            binding.tvOriginalTitle.text = data?.originalName
-            binding.tvOriginalLanguage.text = data?.originalLanguage
-            binding.tvReleaseDate.text = data?.date
-            binding.tvOverview.text = data?.overview
-            binding.tvPopularity.text = data?.popularity.toString()
         })
     }
 
@@ -151,6 +156,7 @@ class DetailFragment : Fragment() {
         binding.myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_favorite -> {
+                    Log.d("DetailbtnMovie",data.toString())
                     Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
                     viewModel.setFavMovie(data)
                     true
@@ -162,10 +168,10 @@ class DetailFragment : Fragment() {
 
 
     fun btnFavTv(data: TvShows) {
-
         binding.myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_favorite -> {
+                    Log.d("DetailbtnTv",data.toString())
                     Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
                     viewModel.setFavTvShow(data)
                     true
