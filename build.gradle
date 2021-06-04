@@ -37,6 +37,10 @@ buildscript {
         multidex_version = '2.0.1'
         recyclerViewVersion = '1.2.0'
         glideVersion = '4.11.0'
+        rxjava_version = "2.2.19"
+        rxandroid_version = "2.1.1"
+        lifecycle_version = "2.2.0"
+        retrofit_version ="2.9.0"
     }
 }
 

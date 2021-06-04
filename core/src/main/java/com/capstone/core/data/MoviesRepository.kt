@@ -16,6 +16,7 @@ import com.capstone.core.utils.DataMapper
 import com.randhypi.mymovie.data.source.remote.response.RemoteDataSource
 import com.randhypi.mymovie.data.source.response.ResultsItem
 import com.randhypi.mymovie.data.source.response.ResultsItemTv
+import io.reactivex.Flowable
 
 class MoviesRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -24,28 +25,16 @@ class MoviesRepository(
 ) :  IMoviesRepository {
 
 
-    override fun getMovies(): LiveData<Resource<PagedList<Movies>>> {
+    override fun getMovies(): Flowable<Resource<List<Movies>>> {
         return object :
-            NetworkBoundResource<PagedList<Movies>, List<ResultsItem>>(appExecutors) {
-            override fun loadFromDB(): LiveData<PagedList<Movies>> {
-                val config = PagedList.Config.Builder()
-                    .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(4)
-                    .setPageSize(4)
-                    .build()
-
-                val data = localDataSource.getAllMovies().map {
-                    DataMapper.mapEntitiesToDomainMovies(it)
-                }
-
-
-                return LivePagedListBuilder(data, config).build()
-
+            NetworkBoundResource<List<Movies>, List<ResultsItem>>() {
+            override fun loadFromDB(): Flowable<List<Movies>> {
+                return localDataSource.getAllMovies().map { DataMapper.mapEntitiesToDomainMovies(it) }
 
             }
 
 
-            override fun shouldFetch(data: PagedList<Movies>?): Boolean =
+            override fun shouldFetch(data: List<Movies>?): Boolean =
                 data == null || data.isEmpty()
 
 
@@ -79,6 +68,7 @@ class MoviesRepository(
                 }
                 localDataSource.insertMovies(moviesArrayList)
             }
+
 
         }.asLiveData()
     }
