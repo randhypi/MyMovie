@@ -9,22 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.core.R
 import com.capstone.core.databinding.ItemsTvshowsBinding
+import com.capstone.core.domain.model.Movies
 import com.capstone.core.domain.model.TvShows
 
-class TvShowsAdapter : PagedListAdapter<TvShows, TvShowsAdapter.ListViewHolder>(
-    DIFF_CALLBACK
-) {
+class TvShowsAdapter() : RecyclerView.Adapter<TvShowsAdapter.ListViewHolder>() {
 
+    private var listData = ArrayList<TvShows>()
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShows>() {
-            override fun areItemsTheSame(oldItem: TvShows, newItem: TvShows): Boolean {
-                return oldItem.id == newItem.id
-            }
-            override fun areContentsTheSame(oldItem: TvShows, newItem: TvShows): Boolean {
-                return oldItem == newItem
-            }
-        }
+    fun setData(newListData: List<TvShows>?) {
+        if (newListData == null) return
+        listData.clear()
+        listData.addAll(newListData)
+        notifyDataSetChanged()
     }
 
 
@@ -43,10 +39,8 @@ class TvShowsAdapter : PagedListAdapter<TvShows, TvShowsAdapter.ListViewHolder>(
     }
 
     override fun onBindViewHolder(listViewHolder: ListViewHolder, position: Int) {
-        val tv = getItem(position)
-        tv?.let {
-            listViewHolder.bind(it)
-        }
+        val data = listData[position]
+        listViewHolder.bind(data)
     }
 
 
@@ -68,4 +62,6 @@ class TvShowsAdapter : PagedListAdapter<TvShows, TvShowsAdapter.ListViewHolder>(
     interface OnItemClickCallback {
         fun onItemClicked(data: String)
     }
+
+    override fun getItemCount(): Int = listData.size
 }

@@ -59,7 +59,7 @@ class TvShowsFavListFragment : Fragment() {
         binding.rvTvShowsFavList.adapter = tvShowsFavAdapter
 
         viewModel.getTvShowsFav()?.observe(viewLifecycleOwner,{ tv ->
-            tvShowsFavAdapter.submitList(tv)
+            tvShowsFavAdapter.setData(tv)
         })
 
         tvShowsFavAdapter.setOnItemClickCallback(object :  TvShowsFavAdapter.OnItemClickCallback{

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.capstone.core.data.Resource
 import com.randhypi.mymovie.databinding.FragmentTvShowsBinding
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -61,14 +62,14 @@ class TvShowsListFragment : Fragment() {
 
         viewModel.getTvShows()?.observe(viewLifecycleOwner,{ tv ->
 
-            when(tv.status){
-                Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
-                Status.SUCCESS -> {
-                    binding?.progressBar?.visibility = View.GONE
-                    tvshowsAdapter.submitList(tv.data)
+            when(tv){
+               is Resource.Loading  -> binding.progressBar.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    tvshowsAdapter.setData(tv.data)
                 }
-                Status.ERROR -> {
-                    binding?.progressBar?.visibility = View.GONE
+                is Resource.Error -> {
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                 }
             }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.capstone.core.data.Resource
 import com.randhypi.mymovie.databinding.FragmentMoviesBinding
 import com.randhypi.mymovie.ui.favorite.movies.MoviesFavListFragment
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
@@ -59,14 +60,14 @@ class  MoviesListFragment : Fragment() {
         binding.rvMoviesList.adapter = moviesAdapter
 
         viewModel.getMovies().observe(viewLifecycleOwner,{ movies ->
-           when(movies.status){
-               Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
-               Status.SUCCESS -> {
-                   binding?.progressBar?.visibility = View.GONE
-                   moviesAdapter.submitList(movies.data)
+           when(movies){
+              is Resource.Loading  -> binding.progressBar.visibility = View.VISIBLE
+               is Resource.Success  -> {
+                   binding.progressBar.visibility = View.GONE
+                   moviesAdapter.setData(movies.data)
                }
-               Status.ERROR -> {
-                   binding?.progressBar?.visibility = View.GONE
+               is Resource.Error -> {
+                   binding.progressBar.visibility = View.GONE
                    Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                }
            }

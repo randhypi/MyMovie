@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit
 
     val repositoryModule = module {
         single { LocalDataSource(get()) }
-        single { RemoteDataSource() }
+        single { RemoteDataSource(get()) }
         factory { AppExecutors() }
         single<IMoviesRepository> { MoviesRepository(get(), get(), get()) }
     }

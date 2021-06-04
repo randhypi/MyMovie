@@ -1,10 +1,7 @@
 package com.randhypi.mymovie.ui.detail
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.capstone.core.data.source.local.entity.MoviesEntity
 import com.capstone.core.data.source.local.entity.TvShowsEntity
 import com.capstone.core.data.MoviesRepository
@@ -26,12 +23,12 @@ class DetailViewModel(private val moviesUseCase: MoviesUseCase) : ViewModel() {
     }
 
 
-    fun getDetailMovies(): LiveData<Movies> = Transformations.switchMap(id) {
-        moviesUseCase.getDetailMovies(it)
+    fun getDetailMovies()  = Transformations.switchMap(id) {
+        LiveDataReactiveStreams.fromPublisher(moviesUseCase.getDetailMovies(it))
     }
 
-    fun getDetailTvSHows(): LiveData<TvShows> = Transformations.switchMap(id) {
-        moviesUseCase.getDetailTvShows(it)
+    fun getDetailTvSHows() = Transformations.switchMap(id) {
+        LiveDataReactiveStreams.fromPublisher(moviesUseCase.getDetailTvShows(it))
     }
 
     fun setFavMovie(detailMovies: Movies?) {

@@ -60,7 +60,7 @@ class MoviesFavListFragment : Fragment() {
 
         moviesFavViewModel.getMoviesFav().observe(viewLifecycleOwner,{ movies ->
            // Log.d(TAG,"${movies[0].original_title} home list")
-            movieFavAdapter.submitList(movies)
+            movieFavAdapter.setData(movies)
         })
 
         movieFavAdapter.setOnItemClickCallback(object : MovieFavAdapter.OnItemClickCallback{

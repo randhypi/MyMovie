@@ -22,14 +22,15 @@ class MoviesRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
-) :  IMoviesRepository {
+) : IMoviesRepository {
 
 
     override fun getMovies(): Flowable<Resource<List<Movies>>> {
         return object :
             NetworkBoundResource<List<Movies>, List<ResultsItem>>() {
             override fun loadFromDB(): Flowable<List<Movies>> {
-                return localDataSource.getAllMovies().map { DataMapper.mapEntitiesToDomainMovies(it) }
+                return localDataSource.getAllMovies()
+                    .map { DataMapper.mapEntitiesToDomainMovies(it) }
 
             }
 
@@ -38,7 +39,7 @@ class MoviesRepository(
                 data == null || data.isEmpty()
 
 
-            override fun createCall(): LiveData<ApiResponse<List<ResultsItem>>> =
+            override fun createCall(): Flowable<ApiResponse<List<ResultsItem>>> =
                 remoteDataSource.getMovies()
 
 
@@ -70,31 +71,21 @@ class MoviesRepository(
             }
 
 
-        }.asLiveData()
+        }.asFlowable()
     }
 
-    override fun getTvShows(): LiveData<Resource<PagedList<TvShows>>> {
+    override fun getTvShows(): Flowable<Resource<List<TvShows>>> {
         return object :
-            NetworkBoundResource<PagedList<TvShows>, List<ResultsItemTv>>(appExecutors) {
-            override fun loadFromDB(): LiveData<PagedList<TvShows>> {
-                val config = PagedList.Config.Builder()
-                    .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(4)
-                    .setPageSize(4)
-                    .build()
-
-                val data = localDataSource.getAllTv().map {
-                    DataMapper.mapEntitiesToDomainTvShows(it)
-                }
-
-                return LivePagedListBuilder(data, config).build()
+            NetworkBoundResource<List<TvShows>, List<ResultsItemTv>>() {
+            override fun loadFromDB(): Flowable<List<TvShows>> {
+                return localDataSource.getAllTv().map { DataMapper.mapEntitiesToDomainTvShows(it) }
             }
 
 
-            override fun shouldFetch(data: PagedList<TvShows>?): Boolean =
+            override fun shouldFetch(data: List<TvShows>?): Boolean =
                 data == null || data.isEmpty()
 
-            override fun createCall(): LiveData<ApiResponse<List<ResultsItemTv>>> =
+            override fun createCall(): Flowable<ApiResponse<List<ResultsItemTv>>> =
                 remoteDataSource.getTv()
 
 
@@ -124,55 +115,32 @@ class MoviesRepository(
                 }
                 localDataSource.insertTvs(tvList)
             }
-        }.asLiveData()
+        }.asFlowable()
     }
 
-    override fun getDetailMovies(id: String): LiveData<Movies> =
+    override fun getDetailMovies(id: String): Flowable<Movies> =
         localDataSource.getDetailMovie(id).map {
-            DataMapper.mapEntitiesToDomainMovies(it)
+            DataMapper.mapDetailEntitiesToDomainMovies(it)
         }
 
 
-    override fun getDetailTvShows(id: String): LiveData<TvShows> =
+    override fun getDetailTvShows(id: String): Flowable<TvShows> =
         localDataSource.getDetailTv(id).map {
-            DataMapper.mapEntitiesToDomainTvShows(it)
+            DataMapper.mapDetailEntitiesToDomainTvShows(it)
         }
 
 
-    override fun getFavMovies(): LiveData<PagedList<Movies>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(4)
-            .setPageSize(4)
-            .build()
-
-        val data = localDataSource.getFavMovie().map {
+    override fun getFavMovies(): Flowable<List<Movies>> =
+        localDataSource.getFavMovie().map {
             DataMapper.mapEntitiesToDomainMovies(it)
         }
 
-        return LivePagedListBuilder(data, config).build()
 
-    }
-
-
-    override fun getFavTvShows(): LiveData<PagedList<TvShows>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(4)
-            .setPageSize(4)
-            .build()
-
-        val data = localDataSource.getFavTv().map {
-            DataMapper.mapEntitiesToDomainTvShows(it)
-        }
-
-
-        return LivePagedListBuilder(data, config).build()
-
-    }
+    override fun getFavTvShows(): Flowable<List<TvShows>> =
+        localDataSource.getFavTv().map { DataMapper.mapEntitiesToDomainTvShows(it) }
 
     override fun setFavMovie(movie: Movies) {
-        val movieEntity = DataMapper.mapDomainToEntitiesMovies(movie)
+        val movieEntity = DataMapper.mapDetailDomainToEntitiesMovies(movie)
 
         appExecutors.diskIO().execute {
 
@@ -182,9 +150,12 @@ class MoviesRepository(
     }
 
     override fun setFavTvShow(tv: TvShows) {
-     val tvShowsEntity = DataMapper.mapDomainToEntitiesTvShows(tv)
+        val tvShowsEntity = DataMapper.mapDetailDomainToEntitiesTvShows(tv)
         Log.d("Movies Repository", tvShowsEntity.toString())
         appExecutors.diskIO().execute {
+            tvShowsEntity.let {
+
+            }
             localDataSource.updateTv(tvShowsEntity)
         }
 

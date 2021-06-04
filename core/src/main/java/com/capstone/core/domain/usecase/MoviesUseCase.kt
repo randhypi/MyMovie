@@ -1,18 +1,18 @@
 package com.capstone.core.domain.usecase
 
-import androidx.lifecycle.LiveData
-import androidx.paging.PagedList
+
 import com.capstone.core.data.Resource
 import com.capstone.core.domain.model.Movies
 import com.capstone.core.domain.model.TvShows
+import io.reactivex.Flowable
 
 interface MoviesUseCase {
-    fun getMovies(): LiveData<Resource<PagedList<Movies>>>
-    fun getTvShows(): LiveData<Resource<PagedList<TvShows>>>
-    fun getDetailMovies(id: String): LiveData<Movies>
-    fun getDetailTvShows(id: String): LiveData<TvShows>
-    fun getFavMovies(): LiveData<PagedList<Movies>>
-    fun getFavTvShows(): LiveData<PagedList<TvShows>>
+    fun getMovies(): Flowable<Resource<List<Movies>>>
+    fun getTvShows(): Flowable<Resource<List<TvShows>>>
+    fun getDetailMovies(id: String): Flowable<Movies>
+    fun getDetailTvShows(id: String): Flowable<TvShows>
+    fun getFavMovies(): Flowable<List<Movies>>
+    fun getFavTvShows(): Flowable<List<TvShows>>
     fun setFavMovie(movie: Movies)
     fun setFavTvShow(tv: TvShows)
 }

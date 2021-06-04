@@ -1,31 +1,30 @@
 package com.capstone.core.domain.usecase
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.paging.PagedList
 import com.capstone.core.data.Resource
 import com.capstone.core.domain.model.Movies
 import com.capstone.core.domain.model.TvShows
 import com.capstone.core.domain.repository.IMoviesRepository
+import io.reactivex.Flowable
 
 class MoviesInteractor(private val moviesRepository: IMoviesRepository) : MoviesUseCase {
-    override fun getMovies(): LiveData<Resource<PagedList<Movies>>> =
+    override fun getMovies(): Flowable<Resource<List<Movies>>> =
         moviesRepository.getMovies()
 
 
-    override fun getTvShows(): LiveData<Resource<PagedList<TvShows>>> =
+    override fun getTvShows()=
         moviesRepository.getTvShows()
 
-    override fun getDetailMovies(id: String): LiveData<Movies> =
+    override fun getDetailMovies(id: String)=
         moviesRepository.getDetailMovies(id)
 
-    override fun getDetailTvShows(id: String): LiveData<TvShows> =
+    override fun getDetailTvShows(id: String) =
         moviesRepository.getDetailTvShows(id)
 
-    override fun getFavMovies(): LiveData<PagedList<Movies>> =
+    override fun getFavMovies()=
         moviesRepository.getFavMovies()
 
-    override fun getFavTvShows(): LiveData<PagedList<TvShows>> =
+    override fun getFavTvShows() =
         moviesRepository.getFavTvShows()
 
     override fun setFavMovie(movie: Movies) =

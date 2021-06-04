@@ -12,21 +12,16 @@ import com.capstone.core.databinding.ItemsMoviesBinding
 import com.capstone.core.domain.model.Movies
 
 
-class MoviesAdapter() : PagedListAdapter<Movies, MoviesAdapter.ListViewHolder>(
-    DIFF_CALLBACK
-) {
+class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ListViewHolder>() {
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movies>() {
-            override fun areItemsTheSame(oldItem: Movies, newItem: Movies): Boolean {
-                return oldItem.moviesId == newItem.moviesId
-            }
-            override fun areContentsTheSame(oldItem: Movies, newItem: Movies): Boolean {
-                return oldItem == newItem
-            }
-        }
+    private var listData = ArrayList<Movies>()
+
+    fun setData(newListData: List<Movies>?) {
+        if (newListData == null) return
+        listData.clear()
+        listData.addAll(newListData)
+        notifyDataSetChanged()
     }
-
 
     private var onItemClickCallback: OnItemClickCallback? = null
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -41,10 +36,8 @@ class MoviesAdapter() : PagedListAdapter<Movies, MoviesAdapter.ListViewHolder>(
     }
 
     override fun onBindViewHolder(listViewHolder: ListViewHolder, position: Int) {
-        val movies = getItem(position)
-        movies?.let {
-            listViewHolder.bind(it)
-        }
+        val data = listData[position]
+        listViewHolder.bind(data)
     }
 
 
@@ -67,4 +60,6 @@ class MoviesAdapter() : PagedListAdapter<Movies, MoviesAdapter.ListViewHolder>(
     interface OnItemClickCallback {
         fun onItemClicked(data: String?)
     }
+
+    override fun getItemCount(): Int = listData.size
 }

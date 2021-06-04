@@ -9,20 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.randhypi.mymovie.R
 import com.capstone.core.domain.model.Movies
+import com.capstone.core.ui.MoviesAdapter
 import com.randhypi.mymovie.databinding.ItemsMoviesfavBinding
 
 
-class MovieFavAdapter() : PagedListAdapter<Movies, MovieFavAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class MovieFavAdapter : RecyclerView.Adapter<MovieFavAdapter.ListViewHolder>() {
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movies>() {
-            override fun areItemsTheSame(oldItem: Movies, newItem: Movies): Boolean {
-                return oldItem.moviesId == newItem.moviesId
-            }
-            override fun areContentsTheSame(oldItem: Movies, newItem: Movies): Boolean {
-                return oldItem == newItem
-            }
-        }
+    private var listData = ArrayList<Movies>()
+
+    fun setData(newListData: List<Movies>?) {
+        if (newListData == null) return
+        listData.clear()
+        listData.addAll(newListData)
+        notifyDataSetChanged()
     }
 
 
@@ -39,10 +38,8 @@ class MovieFavAdapter() : PagedListAdapter<Movies, MovieFavAdapter.ListViewHolde
     }
 
     override fun onBindViewHolder(listViewHolder: ListViewHolder, position: Int) {
-        val movies = getItem(position)
-        movies?.let {
-            listViewHolder.bind(it)
-        }
+        val data = listData[position]
+        listViewHolder.bind(data)
     }
 
 
@@ -64,4 +61,6 @@ class MovieFavAdapter() : PagedListAdapter<Movies, MovieFavAdapter.ListViewHolde
     interface OnItemClickCallback {
         fun onItemClicked(data: String?)
     }
+
+    override fun getItemCount(): Int = listData.size
 }

@@ -12,7 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
-class RemoteDataSource constructor(private val apiServices: ApiServices) {
+class RemoteDataSource(private val apiServices: ApiServices) {
 
     companion object {
         val TAG = RemoteDataSource::class.java.simpleName
