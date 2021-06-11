@@ -1,4 +1,4 @@
-package com.randhypi.mymovie.ui.favorite
+package com.randhypi.mymovie.favorite
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,7 +14,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.databinding.FragmentFavoriteBinding
+import com.randhypi.mymovie.favorite.databinding.FragmentFavoriteBinding
+import com.randhypi.mymovie.favorite.di.viewModelModule
+import org.koin.core.context.loadKoinModules
 
 class FavoriteFragment : Fragment() {
 
@@ -45,10 +47,13 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadKoinModules(viewModelModule)
+
         val sectionsPagerFavAdapter = SectionsPagerFavAdapter(context as FragmentActivity)
-        val viewPager: ViewPager2 = view.findViewById(R.id.view_pagerfav)
+        val viewPager: ViewPager2 = binding.viewPagerfav
         viewPager.adapter = sectionsPagerFavAdapter
-        val tabs: TabLayout = view.findViewById(R.id.tabsfav)
+        val tabs: TabLayout = binding.tabsfav
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()

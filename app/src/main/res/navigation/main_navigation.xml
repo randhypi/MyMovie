@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.randhypi.mymovie.ui.favorite.FavoriteFragment"
+        android:name="com.randhypi.mymovie.favorite.FavoriteFragment"
         tools:layout="@layout/fragment_favorite"
         android:label="FavoriteFragment" >
         <action

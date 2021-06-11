@@ -1,4 +1,4 @@
-package com.randhypi.mymovie.ui.favorite.movies
+package com.randhypi.mymovie.favorite.movies
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.randhypi.mymovie.databinding.FragmentMoviesfavBinding
-import com.randhypi.mymovie.ui.favorite.FavoriteFragmentDirections
-import com.randhypi.mymovie.ui.home.movies.MovieFavAdapter
-import com.randhypi.mymovie.ui.home.movies.MoviesFavViewModel
+import com.randhypi.mymovie.favorite.FavoriteFragmentDirections
+import com.randhypi.mymovie.favorite.databinding.FragmentMoviesfavBinding
+import com.randhypi.mymovie.favorite.di.viewModelModule
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
 
 class MoviesFavListFragment : Fragment() {
 
@@ -39,6 +39,7 @@ class MoviesFavListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showGridAdapter()
+        loadKoinModules(viewModelModule)
     }
 
     private fun selectedMovies(movies: String){

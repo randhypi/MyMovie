@@ -1,16 +1,13 @@
-package com.randhypi.mymovie.ui.home.movies
+package com.randhypi.mymovie.favorite.movies
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.randhypi.mymovie.R
+import com.randhypi.mymovie.favorite.R
 import com.capstone.core.domain.model.Movies
-import com.capstone.core.ui.MoviesAdapter
-import com.randhypi.mymovie.databinding.ItemsMoviesfavBinding
+import com.randhypi.mymovie.favorite.databinding.ItemsMoviesfavBinding
 
 
 class MovieFavAdapter : RecyclerView.Adapter<MovieFavAdapter.ListViewHolder>() {
@@ -33,7 +30,7 @@ class MovieFavAdapter : RecyclerView.Adapter<MovieFavAdapter.ListViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ListViewHolder {
         val binding =
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.items_movies, viewGroup, false)
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.items_moviesfav, viewGroup, false)
         return ListViewHolder(binding)
     }
 

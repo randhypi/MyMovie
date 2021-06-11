@@ -18,6 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+
         buildConfigField "String", "MOVIE_KEY",  '"f29f6eb26d31bf9cec8ecdd5e011af6f"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

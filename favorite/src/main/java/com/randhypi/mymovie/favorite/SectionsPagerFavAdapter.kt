@@ -1,4 +1,5 @@
-package com.randhypi.mymovie.ui.favorite
+package com.randhypi.mymovie.favorite
+
 
 
 import androidx.annotation.StringRes
@@ -6,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.randhypi.mymovie.R
-import com.randhypi.mymovie.ui.favorite.movies.MoviesFavListFragment
-import com.randhypi.mymovie.ui.favorite.tvshows.TvShowsFavListFragment
+import com.randhypi.mymovie.favorite.movies.MoviesFavListFragment
+import com.randhypi.mymovie.favorite.tvshows.TvShowsFavListFragment
 
 class SectionsPagerFavAdapter(activity: FragmentActivity) : FragmentStateAdapter(
     activity

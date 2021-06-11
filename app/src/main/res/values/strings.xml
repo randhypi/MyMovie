@@ -11,4 +11,5 @@
     <string name="detail">Detail</string>
     <string name="favorite_item">Favorite item</string>
     <string name="favorite">Favorite</string>
+    <string name="title_favorite">Favorite</string>
 </resources>

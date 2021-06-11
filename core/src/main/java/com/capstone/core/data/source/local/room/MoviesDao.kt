@@ -5,6 +5,7 @@ import androidx.paging.DataSource
 import androidx.room.*
 import com.capstone.core.data.source.local.entity.MoviesEntity
 import com.capstone.core.data.source.local.entity.TvShowsEntity
+import io.reactivex.Completable
 import io.reactivex.Flowable
 
 
@@ -14,13 +15,13 @@ interface MoviesDao {
     fun getMovies(): Flowable<List<MoviesEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovies(movies: List<MoviesEntity>)
+    fun insertMovies(movies: List<MoviesEntity>) : Completable
 
     @Query("SELECT * FROM tvshowsentity")
     fun getTvShows():Flowable<List<TvShowsEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTvShows(tv: List<TvShowsEntity>)
+    fun insertTvShows(tv: List<TvShowsEntity>) : Completable
 
     @Query("SELECT * FROM moviesentity WHERE moviesId = :moviesId")
     fun getDetailMovies(moviesId: String):Flowable<MoviesEntity>

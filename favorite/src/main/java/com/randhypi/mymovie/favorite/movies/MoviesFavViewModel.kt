@@ -1,12 +1,8 @@
-package com.randhypi.mymovie.ui.home.movies
+package com.randhypi.mymovie.favorite.movies
 
-import androidx.lifecycle.LiveData
+
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
-import com.capstone.core.data.source.local.entity.MoviesEntity
-import com.capstone.core.data.MoviesRepository
-import com.capstone.core.domain.model.Movies
 import com.capstone.core.domain.usecase.MoviesUseCase
 
 

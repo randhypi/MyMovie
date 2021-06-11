@@ -1,9 +1,6 @@
 package com.capstone.core.data
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
-import androidx.paging.*
 import com.capstone.core.data.source.local.LocalDataSource
 import com.capstone.core.data.source.local.entity.MoviesEntity
 import com.capstone.core.data.source.local.entity.TvShowsEntity
@@ -17,6 +14,8 @@ import com.randhypi.mymovie.data.source.remote.response.RemoteDataSource
 import com.randhypi.mymovie.data.source.response.ResultsItem
 import com.randhypi.mymovie.data.source.response.ResultsItemTv
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MoviesRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -68,6 +67,10 @@ class MoviesRepository(
                     moviesArrayList.add(movie)
                 }
                 localDataSource.insertMovies(moviesArrayList)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe()
+
             }
 
 
@@ -114,6 +117,9 @@ class MoviesRepository(
                     tvList.add(tv)
                 }
                 localDataSource.insertTvs(tvList)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe()
             }
         }.asFlowable()
     }

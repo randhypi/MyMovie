@@ -10,9 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.capstone.core.data.Resource
 import com.randhypi.mymovie.databinding.FragmentMoviesBinding
-import com.randhypi.mymovie.ui.favorite.movies.MoviesFavListFragment
 import com.randhypi.mymovie.ui.home.HomeFragmentDirections
-import com.capstone.core.data.Status
 import com.capstone.core.ui.MoviesAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -24,7 +22,7 @@ class  MoviesListFragment : Fragment() {
     private val viewModel: MoviesViewModel by viewModel()
 
     companion object{
-        val TAG = MoviesFavListFragment::class.java.simpleName
+        val TAG = MoviesListFragment::class.java.simpleName
     }
 
     override fun onCreateView(

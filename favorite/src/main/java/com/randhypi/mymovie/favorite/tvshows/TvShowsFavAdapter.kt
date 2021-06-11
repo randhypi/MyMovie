@@ -1,18 +1,13 @@
-package com.randhypi.mymovie.ui.home.tvshows
+package com.randhypi.mymovie.favorite.tvshows
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.capstone.core.domain.model.Movies
-import com.randhypi.mymovie.R
+import com.randhypi.mymovie.favorite.R
 import com.capstone.core.domain.model.TvShows
-import com.capstone.core.ui.MoviesAdapter
-import com.capstone.core.ui.TvShowsAdapter
-import com.randhypi.mymovie.databinding.ItemsTvshowsfavBinding
+import com.randhypi.mymovie.favorite.databinding.ItemsTvshowsfavBinding
 
 class TvShowsFavAdapter() : RecyclerView.Adapter<TvShowsFavAdapter.ListViewHolder>() {
 
@@ -33,7 +28,7 @@ class TvShowsFavAdapter() : RecyclerView.Adapter<TvShowsFavAdapter.ListViewHolde
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ListViewHolder {
         val binding =
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.items_movies, viewGroup, false)
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.items_tvshowsfav, viewGroup, false)
         return ListViewHolder(binding)
     }
 
