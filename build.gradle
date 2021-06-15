@@ -39,7 +39,7 @@ buildscript {
         glideVersion = '4.11.0'
         rxjava_version = "2.2.19"
         rxandroid_version = "2.1.1"
-        lifecycle_version = "2.2.0"
+        lifecycle_version = "2.3.1"
         retrofit_version ="2.9.0"
     }
 }

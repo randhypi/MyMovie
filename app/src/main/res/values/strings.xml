@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">My Movie</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title">title</string>
     <string name="date">date</string>
     <string name="original_title">Original title</string>
@@ -12,4 +11,5 @@
     <string name="favorite_item">Favorite item</string>
     <string name="favorite">Favorite</string>
     <string name="title_favorite">Favorite</string>
+    <string name="splashscreen_image">Splashscreen Image</string>
 </resources>

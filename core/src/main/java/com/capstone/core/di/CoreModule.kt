@@ -8,6 +8,8 @@ import com.capstone.core.data.source.local.room.MoviesDatabase
 import com.capstone.core.domain.repository.IMoviesRepository
 import com.capstone.core.utils.AppExecutors
 import com.randhypi.mymovie.data.source.remote.response.RemoteDataSource
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -21,10 +23,14 @@ import java.util.concurrent.TimeUnit
     val databaseModule = module {
         factory { get<MoviesDatabase>().moviesDao() }
         single {
+            val passphrase: ByteArray = SQLiteDatabase.getBytes("mymovie".toCharArray())
+            val factory = SupportFactory(passphrase)
             Room.databaseBuilder(
                 androidContext(),
                 MoviesDatabase::class.java, "Movies.db"
-            ).fallbackToDestructiveMigration().build()
+            ).fallbackToDestructiveMigration()
+                .openHelperFactory(factory)
+                .build()
         }
     }
 

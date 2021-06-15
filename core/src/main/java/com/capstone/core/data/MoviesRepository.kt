@@ -45,20 +45,20 @@ class MoviesRepository(
             override fun saveCallResult(data: List<ResultsItem>) {
                 val moviesArrayList = ArrayList<MoviesEntity>()
                 for (response in data) {
-                    val id = response?.id.toString()
-                    val original_language = response?.originalLanguage
-                    val original_title = response?.originalTitle
-                    val title = response?.title
-                    val release_date = response?.releaseDate
-                    val poster = "https://image.tmdb.org/t/p/original${response?.posterPath}"
-                    val overview = response?.overview
-                    val popularity = response?.popularity
+                    val id = response.id.toString()
+                    val originalLanguage = response.originalLanguage
+                    val originalTitle = response.originalTitle
+                    val title = response.title
+                    val releaseDate = response.releaseDate
+                    val poster = "https://image.tmdb.org/t/p/original${response.posterPath}"
+                    val overview = response.overview
+                    val popularity = response.popularity
 
-                    var movie = MoviesEntity(
+                    val movie = MoviesEntity(
                         id,
-                        original_language,
-                        original_title,
-                        title, release_date,
+                        originalLanguage,
+                        originalTitle,
+                        title, releaseDate,
                         poster,
                         overview,
                         popularity
@@ -95,24 +95,24 @@ class MoviesRepository(
             override fun saveCallResult(data: List<ResultsItemTv>) {
                 val tvList = ArrayList<TvShowsEntity>()
                 for (response in data) {
-                    val id = response?.id!!.toString()
-                    val original_language = response?.originalLanguage!!
-                    val original_title = response?.originalName!!
-                    val title = response?.name!!
-                    val release_date = response?.firstAirDate!!
-                    val poster = "https://image.tmdb.org/t/p/original${response?.posterPath!!}"
-                    val overview = response?.overview!!
-                    val popularity = response?.voteAverage!!
+                    val id = response.id.toString()
+                    val originalLanguage = response.originalLanguage
+                    val originalTitle = response.originalName
+                    val title = response.name
+                    val releaseDate = response.firstAirDate
+                    val poster = "https://image.tmdb.org/t/p/original${response.posterPath}"
+                    val overview = response.overview
+                    val popularity = response.voteAverage
 
-                    var tv = TvShowsEntity(
+                    val tv = TvShowsEntity(
                         id = id,
-                        name = title,
-                        originalName = original_title,
-                        originalLanguage = original_language,
-                        overview = overview,
-                        popularity = popularity,
+                        name = title ?: "Title",
+                        originalName = originalTitle ?: "Original Name",
+                        originalLanguage = originalLanguage ?: "Original Language",
+                        overview = overview ?: "Overview",
+                        popularity = popularity ?: 0.0,
                         poster = poster,
-                        date = release_date
+                        date = releaseDate
                     )
                     tvList.add(tv)
                 }

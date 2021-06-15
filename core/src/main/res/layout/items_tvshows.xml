@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cv_item_course"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -12,7 +11,6 @@
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_container"
         android:layout_width="match_parent"
         android:layout_height="365dp">
 
@@ -33,7 +31,6 @@
             tools:ignore="ContentDescription" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
             android:layout_width="187dp"
             android:layout_height="235dp"
             android:layout_gravity="center"

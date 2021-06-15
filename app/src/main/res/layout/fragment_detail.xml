@@ -41,7 +41,6 @@
             android:elevation="50dp" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
             android:layout_width="187dp"
             android:layout_height="235dp"
             android:backgroundTint="@color/purple_700"
@@ -176,7 +175,6 @@
 
 
     <TextView
-        android:id="@+id/tv_release_date_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -225,7 +223,6 @@
 
     <!--    Popularity-->
     <TextView
-        android:id="@+id/tv_popularity_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
