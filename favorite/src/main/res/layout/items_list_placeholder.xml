@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="365dp">
+        android:layout_height="365dp"
+        android:background="#736D6D">
 
         <ImageView
             android:id="@+id/img_poster"
@@ -21,27 +22,13 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="16dp"
+            android:background="#D5D0D0"
             android:elevation="10dp"
             app:layout_constraintBottom_toTopOf="@+id/tv_item_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_image_fav_tv"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal|center_vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.315"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="loading.json"
-            app:lottie_loop="true" />
-
 
         <TextView
             android:id="@+id/tv_item_title"
@@ -50,6 +37,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="#CCC8C8"
             android:ellipsize="marquee"
             android:gravity="start"
             android:maxLines="2"
@@ -59,6 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.083"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_poster"
             tools:text="@string/title" />
 
         <TextView
@@ -68,12 +57,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="28dp"
+            android:background="#CCC8C8"
             android:gravity="start"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.083"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_title"
             tools:text="@string/date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

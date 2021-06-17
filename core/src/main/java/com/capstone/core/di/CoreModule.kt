@@ -10,6 +10,7 @@ import com.capstone.core.utils.AppExecutors
 import com.randhypi.mymovie.data.source.remote.response.RemoteDataSource
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -36,18 +37,18 @@ import java.util.concurrent.TimeUnit
 
     val networkModule = module {
         single {
-            OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                .connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS)
+            val hostname = "api.themoviedb.org"
+            val certificatePinner = CertificatePinner.Builder()
+                .add(hostname, "sha256/ +vqZVAzTqUP8BGkfl88yU7SQ3C8J2uNEa55B7RZjEg0=")
                 .build()
-        }
-        single {
             val loggingInterceptor =
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .certificatePinner(certificatePinner)
                 .build()
 
             val retrofit = Retrofit.Builder()

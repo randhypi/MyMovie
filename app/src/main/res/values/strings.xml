@@ -12,4 +12,5 @@
     <string name="favorite">Favorite</string>
     <string name="title_favorite">Favorite</string>
     <string name="splashscreen_image">Splashscreen Image</string>
+    <string name="image_poster_cardview">Image Poster Cardview</string>
 </resources>

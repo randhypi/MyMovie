@@ -79,9 +79,7 @@ class TvShowsListFragment : Fragment() {
         tvshowsAdapter.setOnItemClickCallback(object :  TvShowsAdapter.OnItemClickCallback{
 
             override fun onItemClicked(data: String) {
-                if (data != null) {
-                    selectedMovies(data)
-                }
+                selectedMovies(data)
             }
         })
     }

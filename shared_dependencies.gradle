@@ -7,8 +7,6 @@ dependencies{
     // Koins
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-android-viewmodel:$koin_version"
-    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
-    androidTestImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 
     //testing
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
@@ -47,4 +45,9 @@ dependencies{
     implementation "androidx.room:room-rxjava2:$room_version"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
 
+    implementation "com.airbnb.android:lottie:$lottie_version"
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
+    implementation "com.facebook.shimmer:shimmer:$shimmer_version"
 }

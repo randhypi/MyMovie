@@ -1,6 +1,7 @@
 package com.randhypi.mymovie.favorite.movies
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -61,7 +62,15 @@ class MoviesFavListFragment : Fragment() {
 
         moviesFavViewModel.getMoviesFav().observe(viewLifecycleOwner,{ movies ->
            // Log.d(TAG,"${movies[0].original_title} home list")
-            movieFavAdapter.setData(movies)
+            if(movies.isNullOrEmpty()){
+                Log.d(TAG,"null")
+                binding.lottieFavMovie.visibility = View.VISIBLE
+            }else{
+                binding.lottieFavMovie.visibility = View.GONE
+                movieFavAdapter.setData(movies)
+            }
+
+
         })
 
         movieFavAdapter.setOnItemClickCallback(object : MovieFavAdapter.OnItemClickCallback{

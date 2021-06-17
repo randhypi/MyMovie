@@ -53,7 +53,9 @@ class FavoriteFragment : Fragment() {
         val sectionsPagerFavAdapter = SectionsPagerFavAdapter(context as FragmentActivity)
         val viewPager: ViewPager2 = binding.viewPagerfav
         viewPager.adapter = sectionsPagerFavAdapter
+        viewPager.isSaveEnabled = false
         val tabs: TabLayout = binding.tabsfav
+
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
@@ -64,11 +66,7 @@ class FavoriteFragment : Fragment() {
         activity?.onBackPressedDispatcher?.addCallback(requireActivity(),
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (navController.currentDestination?.id == R.id.action_homeFragment_to_favoriteFragment) {
-                        navController.popBackStack()
-                    } else {
-                        navController.popBackStack()
-                    }
+                 navController.popBackStack()
                 }
             })
 
@@ -80,6 +78,12 @@ class FavoriteFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        val viewPager2 = binding.viewPagerfav
+
+        viewPager2?.let {
+            it.adapter = null
+        }
+
         _binding = null
     }
 

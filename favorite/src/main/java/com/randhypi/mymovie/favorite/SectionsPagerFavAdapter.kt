@@ -22,12 +22,14 @@ companion object {
     }
 
     override fun createFragment(position: Int): Fragment {
-        var fragment: Fragment? = null
-        when (position) {
-            0 ->fragment = MoviesFavListFragment()
-            1 ->fragment = TvShowsFavListFragment()
+
+      return  when (position) {
+            0 -> MoviesFavListFragment()
+            1 -> TvShowsFavListFragment()
+          else -> MoviesFavListFragment()
         }
-        return fragment as Fragment
+
+
     }
 
 

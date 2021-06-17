@@ -46,10 +46,12 @@ class MovieFavAdapter : RecyclerView.Adapter<MovieFavAdapter.ListViewHolder>() {
                 binding.tvItemTitle.text = userItem.originalTitle
                 binding.tvItemDate.text = userItem.releaseDate
 
-                Glide.with(itemView.context)
-                    .load(userItem.poster)
-                    .fitCenter()
-                    .into(binding.imgPoster)
+
+                 Glide.with(itemView.context)
+                     .load(userItem.poster)
+                     .fitCenter()
+                     .into(binding.imgPoster)
+
 
             itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem.moviesId) }
         }

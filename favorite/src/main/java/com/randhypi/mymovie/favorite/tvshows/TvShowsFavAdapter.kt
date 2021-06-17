@@ -44,10 +44,15 @@ class TvShowsFavAdapter() : RecyclerView.Adapter<TvShowsFavAdapter.ListViewHolde
                 binding.tvItemTitle.text = userItem.originalName
                 binding.tvItemDate.text = userItem.date
 
+
+
                 Glide.with(itemView.context)
                     .load(userItem.poster)
                     .fitCenter()
                     .into(binding.imgPoster)
+
+
+
 
             itemView.setOnClickListener { onItemClickCallback?.onItemClicked(userItem?.id!!) }
         }

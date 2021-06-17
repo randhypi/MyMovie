@@ -19,7 +19,7 @@ import com.randhypi.mymovie.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     companion object {
         val TAG = HomeFragment::class.java.simpleName
@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view = binding.root
+        val view = binding?.root
 
         return view
     }
@@ -49,10 +49,14 @@ class HomeFragment : Fragment() {
         val sectionsPagerAdapter = SectionsPagerAdapter(context as FragmentActivity)
         val viewPager: ViewPager2 = view.findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
+        viewPager.isSaveEnabled = false
+
         val tabs: TabLayout = view.findViewById(R.id.tabs)
+
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+
         activity?.actionBar?.elevation = 0f
         activity?.onBackPressedDispatcher?.addCallback(requireActivity(),
             object : OnBackPressedCallback(true) {
@@ -61,13 +65,14 @@ class HomeFragment : Fragment() {
                 }
             })
 
-        binding.myToolbar.inflateMenu(R.menu.menu)
-        binding.myToolbar.setOnMenuItemClickListener {
+        binding?.myToolbar?.inflateMenu(R.menu.menu)
+
+        binding?.myToolbar?.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_favorite -> {
                     val toFav = HomeFragmentDirections.actionHomeFragmentToFavoriteFragment()
 
-                    view?.findNavController()?.navigate(toFav)
+                    view.findNavController().navigate(toFav)
                     true
                 }
                 else -> false
@@ -75,9 +80,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val viewPager2 = binding?.viewPager
+
+        viewPager2?.let {
+            it.adapter = null
+        }
+
         _binding = null
+
     }
 
 }

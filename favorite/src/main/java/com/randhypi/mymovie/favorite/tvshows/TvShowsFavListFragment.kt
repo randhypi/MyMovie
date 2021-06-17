@@ -1,6 +1,7 @@
 package com.randhypi.mymovie.favorite.tvshows
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.randhypi.mymovie.favorite.FavoriteFragmentDirections
 import com.randhypi.mymovie.favorite.databinding.FragmentTvShowsfavBinding
 import com.randhypi.mymovie.favorite.di.viewModelModule
+import com.randhypi.mymovie.favorite.movies.MoviesFavListFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 
@@ -60,7 +62,16 @@ class TvShowsFavListFragment : Fragment() {
         binding.rvTvShowsFavList.adapter = tvShowsFavAdapter
 
         viewModel.getTvShowsFav()?.observe(viewLifecycleOwner,{ tv ->
-            tvShowsFavAdapter.setData(tv)
+            if(tv.isNullOrEmpty()){
+                Log.d(TAG,"null")
+                binding.lottieFavTv.visibility = View.VISIBLE
+                binding.lottieFavTv.playAnimation()
+            }else{
+                binding.lottieFavTv.visibility = View.GONE
+                binding.lottieFavTv.cancelAnimation()
+                tvShowsFavAdapter.setData(tv)
+            }
+
         })
 
         tvShowsFavAdapter.setOnItemClickCallback(object :  TvShowsFavAdapter.OnItemClickCallback{
