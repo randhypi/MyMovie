@@ -54,8 +54,8 @@ class FavoriteFragment : Fragment() {
         val viewPager: ViewPager2 = binding.viewPagerfav
         viewPager.adapter = sectionsPagerFavAdapter
         viewPager.isSaveEnabled = false
-        val tabs: TabLayout = binding.tabsfav
 
+        val tabs: TabLayout = binding.tabsfav
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
@@ -80,7 +80,7 @@ class FavoriteFragment : Fragment() {
         super.onDestroy()
         val viewPager2 = binding.viewPagerfav
 
-        viewPager2?.let {
+        viewPager2.let {
             it.adapter = null
         }
 
