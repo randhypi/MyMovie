@@ -59,10 +59,12 @@ class FavoriteFragment : Fragment() {
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+
         activity?.actionBar?.elevation = 0f
 
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         val navController = findNavController()
+
         activity?.onBackPressedDispatcher?.addCallback(requireActivity(),
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -83,6 +85,7 @@ class FavoriteFragment : Fragment() {
         viewPager2.let {
             it.adapter = null
         }
+
 
         _binding = null
     }
