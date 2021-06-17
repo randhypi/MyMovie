@@ -48,17 +48,12 @@ class MoviesAdapter() : RecyclerView.Adapter<MoviesAdapter.ListViewHolder>() {
                 binding.tvItemTitle.text = userItem.originalTitle
                 binding.tvItemDate.text = userItem.releaseDate
 
-            if(userItem.poster.isNullOrEmpty()) {
-                binding.lottieImageMovie.visibility = View.VISIBLE
-            }else{
-                binding.lottieImageMovie.visibility = View.GONE
-                binding.lottieImageMovie.cancelAnimation()
 
                 Glide.with(itemView.context)
                     .load(userItem.poster)
                     .fitCenter()
                     .into(binding.imgPoster)
-            }
+
 
 
 

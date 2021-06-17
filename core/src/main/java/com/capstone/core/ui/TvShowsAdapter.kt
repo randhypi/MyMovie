@@ -50,17 +50,11 @@ class TvShowsAdapter() : RecyclerView.Adapter<TvShowsAdapter.ListViewHolder>() {
                 binding.tvItemTitle.text = userItem.originalName
                 binding.tvItemDate.text = userItem.date
 
-            if(userItem.poster.isEmpty()) {
-                binding.lottieImageTv.visibility = View.VISIBLE
-            }else{
-                binding.lottieImageTv.visibility = View.GONE
-                binding.lottieImageTv.cancelAnimation()
-
                 Glide.with(itemView.context)
                     .load(userItem.poster)
                     .fitCenter()
                     .into(binding.imgPoster)
-            }
+
 
 
 
